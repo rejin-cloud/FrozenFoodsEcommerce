@@ -1,0 +1,58 @@
+<section class="py-5 bg-light">
+
+    <div class="container">
+
+        <div class="text-center mb-5">
+
+            <h2 class="fw-bold">
+                Shop by Category
+            </h2>
+
+            <p class="text-muted">
+                Browse our fresh and frozen products.
+            </p>
+
+        </div>
+
+        <div class="row">
+
+            {% for category in categories %}
+
+            <div class="col-lg-3 col-md-4 col-6 mb-4">
+
+                <div class="card category-card shadow-sm h-100 border-0">
+
+                    <img
+                        src="{{ category.image.url }}"
+                        class="card-img-top"
+                        style="height:180px; object-fit:cover;">
+
+                    <div class="card-body text-center">
+
+                        <h5>
+
+                            {{ category.name }}
+
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="text-center">
+
+                No Categories Found
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>
