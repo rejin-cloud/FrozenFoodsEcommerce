@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="card p-5 shadow-sm mx-auto" style="max-width: 600px;">
+        <h1 class="text-success mb-3">✔ Order Confirmed!</h1>
+        <p class="fs-5">Thank you, <strong>{{ order.full_name }}</strong>. Your order has been placed.</p>
+        <p>Order ID: <strong>#{{ order.id }}</strong></p>
+        <hr>
+        <div class="text-start">
+            <p><strong>Payment Method:</strong> {{ order.get_payment_method_display }}</p>
+            <p><strong>Payment Status:</strong> {% if order.is_paid %}<span class="text-success">Paid</span>{% else %}<span class="text-warning">Pending (COD)</span>{% endif %}</p>
+            <p><strong>Delivery Address:</strong> {{ order.address }}, {{ order.city }} - {{ order.pincode }}</p>
+            <p><strong>Total Amount:</strong> ₹{{ order.total_amount }}</p>
+        </div>
+        <a href="/" class="btn btn-primary mt-3">Continue Shopping</a>
+    </div>
+</div>
+{% endblock %}

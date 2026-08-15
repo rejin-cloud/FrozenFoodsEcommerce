@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.text import slugify
+from django.conf import settings
 
 
 # ==========================
@@ -121,6 +122,13 @@ class Product(models.Model):
 
         return 0
 
+    @property
+    def is_in_stock(self):
+        """
+        Checks if any active variant has stock available.
+        """
+        return self.variants.filter(is_active=True, stock__gt=0).exists()
+
     def save(self, *args, **kwargs):
         if not self.slug:
             self.slug = slugify(self.name)
@@ -209,8 +217,6 @@ class ProductVariant(models.Model):
     def __str__(self):
         return f"{self.product.name} - {self.variant_name}"
 
-    
-
 
 # ==========================
 # Product Images
@@ -252,4 +258,32 @@ class ProductImage(models.Model):
     def __str__(self):
         return f"{self.product.name} Image {self.display_order}"
 
-    
+
+# ==========================
+# Wishlist / Saved Items
+# ==========================
+
+class Wishlist(models.Model):
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="wishlist_items"
+    )
+
+    product = models.ForeignKey(
+        Product,
+        on_delete=models.CASCADE,
+        related_name="in_wishlists"
+    )
+
+    created_at = models.DateTimeField(
+        auto_now_add=True
+    )
+
+    class Meta:
+        ordering = ["-created_at"]
+        unique_together = ("user", "product")
+
+    def __str__(self):
+        return f"{self.user.username} - {self.product.name}"

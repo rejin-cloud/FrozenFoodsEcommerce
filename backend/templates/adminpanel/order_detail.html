@@ -1,0 +1,564 @@
+{% extends "adminpanel/admin_base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+
+    <!-- HEADER -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold mb-1">
+                Order #{{ order.id }}
+            </h1>
+
+            <p class="text-muted mb-0">
+                Order placed on
+                {{ order.created_at|date:"d M Y, h:i A" }}
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'adminpanel:orders' %}"
+            class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+            Back to Orders
+
+        </a>
+
+    </div>
+
+
+
+    <!-- ORDER STATUS -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <div class="row align-items-center">
+
+                <div class="col-md-6">
+
+                    <h5 class="fw-bold mb-1">
+                        Order Status
+                    </h5>
+
+                    <p class="text-muted mb-0">
+                        Change the current status of this order.
+                    </p>
+
+                </div>
+
+
+                <div class="col-md-6">
+
+                    <form
+                        method="POST"
+                        class="d-flex gap-2 justify-content-md-end">
+
+                        {% csrf_token %}
+
+                        <select
+                            name="status"
+                            class="form-select"
+                            style="max-width: 220px;">
+
+                            {% for value, label in status_choices %}
+
+                                <option
+                                    value="{{ value }}"
+                                    {% if order.status == value %}
+                                        selected
+                                    {% endif %}>
+
+                                    {{ label }}
+
+                                </option>
+
+                            {% endfor %}
+
+                        </select>
+
+
+                        <button
+                            type="submit"
+                            class="btn btn-success">
+
+                            <i class="bi bi-check-circle"></i>
+                            Update Status
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- CUSTOMER + PAYMENT INFORMATION -->
+
+    <div class="row g-4 mb-4">
+
+
+        <!-- CUSTOMER DETAILS -->
+
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-4">
+
+                        <i class="bi bi-person"></i>
+                        Customer Details
+
+                    </h5>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted">
+                            Name
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ order.full_name }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted">
+                            Email
+                        </small>
+
+                        <div>
+                            {{ order.email }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted">
+                            Phone
+                        </small>
+
+                        <div>
+                            {{ order.phone }}
+                        </div>
+
+                    </div>
+
+
+                    {% if order.user %}
+
+                    <div>
+
+                        <small class="text-muted">
+                            Account
+                        </small>
+
+                        <div>
+                            {{ order.user.username }}
+                        </div>
+
+                    </div>
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!-- PAYMENT DETAILS -->
+
+        <div class="col-lg-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <h5 class="fw-bold mb-4">
+
+                        <i class="bi bi-credit-card"></i>
+                        Payment Details
+
+                    </h5>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted">
+                            Payment Method
+                        </small>
+
+                        <div class="fw-semibold">
+                            {{ order.get_payment_method_display }}
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted">
+                            Payment Status
+                        </small>
+
+                        <div>
+
+                            {% if order.is_paid %}
+
+                                <span class="badge bg-success">
+                                    Paid
+                                </span>
+
+                            {% else %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Not Paid
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="mb-3">
+
+                        <small class="text-muted">
+                            Order Status
+                        </small>
+
+                        <div>
+
+                            {% if order.status == "Pending" %}
+
+                                <span class="badge bg-warning text-dark">
+                                    Pending
+                                </span>
+
+                            {% elif order.status == "Processing" %}
+
+                                <span class="badge bg-info text-dark">
+                                    Processing
+                                </span>
+
+                            {% elif order.status == "Shipped" %}
+
+                                <span class="badge bg-primary">
+                                    Shipped
+                                </span>
+
+                            {% elif order.status == "Delivered" %}
+
+                                <span class="badge bg-success">
+                                    Delivered
+                                </span>
+
+                            {% elif order.status == "Completed" %}
+
+                                <span class="badge bg-success">
+                                    Completed
+                                </span>
+
+                            {% elif order.status == "Cancelled" %}
+
+                                <span class="badge bg-danger">
+                                    Cancelled
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+                    </div>
+
+
+                    <div>
+
+                        <small class="text-muted">
+                            Last Updated
+                        </small>
+
+                        <div>
+                            {{ order.updated_at|date:"d M Y, h:i A" }}
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- DELIVERY ADDRESS -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-4">
+
+                <i class="bi bi-geo-alt"></i>
+                Delivery Address
+
+            </h5>
+
+
+            <div class="row">
+
+                <div class="col-md-8">
+
+                    <p class="mb-2">
+
+                        {{ order.address|linebreaksbr }}
+
+                    </p>
+
+                    <p class="mb-0">
+
+                        <strong>City:</strong>
+                        {{ order.city }}
+
+                        <br>
+
+                        <strong>Pincode:</strong>
+                        {{ order.pincode }}
+
+                    </p>
+
+                </div>
+
+                <div class="col-md-4">
+
+                    <p class="mb-0">
+
+                        <strong>Phone:</strong>
+                        {{ order.phone }}
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ORDER ITEMS -->
+
+    <div class="card border-0 shadow-sm mb-4">
+
+        <div class="card-body">
+
+            <h5 class="fw-bold mb-4">
+
+                <i class="bi bi-bag"></i>
+                Ordered Products
+
+            </h5>
+
+
+            <div class="table-responsive">
+
+                <table class="table align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Product</th>
+
+                            <th>Variant</th>
+
+                            <th>Price</th>
+
+                            <th>Quantity</th>
+
+                            <th>Subtotal</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for item in order.items.all %}
+
+                        <tr>
+
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <td>
+
+                                <strong>
+                                    {{ item.product_name }}
+                                </strong>
+
+                            </td>
+
+
+                            <td>
+
+                                {% if item.variant_name %}
+
+                                    {{ item.variant_name }}
+
+                                {% else %}
+
+                                    -
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <td>
+
+                                ₹{{ item.price }}
+
+                            </td>
+
+
+                            <td>
+
+                                {{ item.quantity }}
+
+                            </td>
+
+
+                            <td>
+
+                                <strong>
+                                    ₹{{ item.subtotal }}
+                                </strong>
+
+                            </td>
+
+                        </tr>
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="6"
+                                class="text-center text-muted py-4">
+
+                                No products found for this order.
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ORDER SUMMARY -->
+
+    <div class="row justify-content-end">
+
+        <div class="col-md-5 col-lg-4">
+
+            <div class="card border-0 shadow-sm">
+
+                <div class="card-body">
+
+
+                    <h5 class="fw-bold mb-4">
+                        Order Summary
+                    </h5>
+
+
+                    <div class="d-flex justify-content-between mb-3">
+
+                        <span class="text-muted">
+                            Items
+                        </span>
+
+                        <span>
+                            {{ order.items.all|length }}
+                        </span>
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <div class="d-flex justify-content-between">
+
+                        <strong>
+                            Total Amount
+                        </strong>
+
+                        <strong class="text-success fs-5">
+
+                            ₹{{ order.total_amount }}
+
+                        </strong>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

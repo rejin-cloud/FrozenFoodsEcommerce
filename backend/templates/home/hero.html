@@ -1,63 +1,161 @@
-<section class="hero-section py-5">
+<section class="hero-section">
 
     <div class="container">
 
-        <div class="row align-items-center">
+        <div class="row align-items-center g-5">
 
-            <!-- Left Side -->
+            <!-- LEFT CONTENT -->
             <div class="col-lg-6">
 
-                <span class="badge bg-success px-3 py-2 mb-3">
+                <div class="hero-badge mb-3">
+                    <span>●</span>
                     Fresh • Frozen • Chilled
-                </span>
+                </div>
 
-                <h1 class="display-4 fw-bold mb-4">
-                    Premium Frozen &
-                    <span class="text-success">Chilled Foods</span>
+                <h1 class="hero-title">
+                    Premium Quality
+                    <span>Frozen Foods</span>
+                    Delivered Fresh
                 </h1>
 
-                <p class="lead text-muted mb-4">
-
-                    Shop premium quality fish, chicken, beef,
-                    seafood and frozen products delivered fresh
-                    to your doorstep.
-
+                <p class="hero-description">
+                    Shop premium fish, chicken, beef, seafood and
+                    frozen products. Carefully packed and delivered
+                    straight to your doorstep.
                 </p>
 
-                <div class="mb-4">
+                <!-- FEATURES -->
+                <div class="hero-features mb-4">
 
-                    <div class="mb-2">
-                        ✅ Premium Quality
+                    <div class="hero-feature">
+
+                        <div class="feature-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <div>
+                            <strong>Premium Quality</strong>
+                            <small>Carefully selected products</small>
+                        </div>
+
                     </div>
 
-                    <div class="mb-2">
-                        ❄ Hygienically Packed
+
+                    <div class="hero-feature">
+
+                        <div class="feature-icon">
+                            <i class="bi bi-snow2"></i>
+                        </div>
+
+                        <div>
+                            <strong>Fresh & Hygienic</strong>
+                            <small>Properly packed & preserved</small>
+                        </div>
+
                     </div>
 
-                    <div class="mb-2">
-                        🚚 Fast Home Delivery
+
+                    <div class="hero-feature">
+
+                        <div class="feature-icon">
+                            <i class="bi bi-truck"></i>
+                        </div>
+
+                        <div>
+                            <strong>Fast Delivery</strong>
+                            <small>Delivered to your doorstep</small>
+                        </div>
+
                     </div>
 
                 </div>
 
-                <a href="#" class="btn btn-success btn-lg me-3">
-                    Shop Now
-                </a>
 
-                <a href="#" class="btn btn-outline-success btn-lg">
-                    Browse Categories
-                </a>
+                <!-- BUTTONS -->
+                <div class="hero-buttons">
+
+                    <a
+                        href="#featured-products"
+                        class="btn btn-success btn-lg hero-shop-btn"
+                    >
+                        Shop Now
+                        <i class="bi bi-arrow-right ms-2"></i>
+                    </a>
+
+
+                    <a
+                        href="#categories"
+                        class="btn btn-outline-success btn-lg hero-category-btn"
+                    >
+                        Browse Categories
+                    </a>
+
+                </div>
+
+
+                <!-- TRUST -->
+                <div class="hero-trust mt-4">
+
+                    <i class="bi bi-check-circle-fill"></i>
+
+                    Trusted quality • Hygienically packed • Fresh delivery
+
+                </div>
 
             </div>
 
-            <!-- Right Side -->
 
-            <div class="col-lg-6 text-center">
+            <!-- RIGHT IMAGE -->
+            <div class="col-lg-6">
 
-                <img
-                    src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=900"
-                    class="img-fluid rounded shadow hero-image"
-                    alt="Frozen Foods">
+                <div class="hero-image-wrapper">
+
+                    <div class="hero-circle"></div>
+
+
+                    <img
+                        src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=1200"
+                        class="hero-main-image"
+                        alt="Premium frozen and fresh foods"
+                    >
+
+
+                    <!-- DELIVERY CARD -->
+                    <div class="hero-floating-card delivery-card">
+
+                        <div class="floating-icon">
+
+                            <i class="bi bi-truck"></i>
+
+                        </div>
+
+                        <div>
+
+                            <strong>Fast Delivery</strong>
+
+                            <small>
+                                Fresh to your door
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- QUALITY CARD -->
+                    <div class="hero-floating-card quality-card">
+
+                        <div class="quality-stars">
+                            ★★★★★
+                        </div>
+
+                        <strong>
+                            Premium Quality
+                        </strong>
+
+                    </div>
+
+                </div>
 
             </div>
 
@@ -66,3 +164,519 @@
     </div>
 
 </section>
+
+
+<style>
+
+/* =====================================================
+   HERO SECTION
+===================================================== */
+
+.hero-section {
+    background:
+        linear-gradient(
+            135deg,
+            rgba(232, 248, 251, 0.95),
+            rgba(248, 253, 254, 0.95)
+        );
+
+    padding-top: 80px;
+    padding-bottom: 80px;
+}
+
+
+/* =====================================================
+   BADGE
+===================================================== */
+
+.hero-badge {
+
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 8px 15px;
+
+    background: #e8f7ef;
+
+    color: #198754;
+
+    border-radius: 50px;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+}
+
+
+.hero-badge span {
+
+    font-size: 10px;
+
+    color: #198754;
+
+}
+
+
+/* =====================================================
+   TITLE
+===================================================== */
+
+.hero-title {
+
+    font-size: clamp(42px, 5vw, 68px);
+
+    line-height: 1.08;
+
+    font-weight: 800;
+
+    letter-spacing: -1.5px;
+
+    color: #20252b;
+
+    margin-bottom: 25px;
+
+}
+
+
+.hero-title span {
+
+    display: block;
+
+    color: #198754;
+
+}
+
+
+/* =====================================================
+   DESCRIPTION
+===================================================== */
+
+.hero-description {
+
+    font-size: 18px;
+
+    line-height: 1.7;
+
+    color: #667085;
+
+    max-width: 600px;
+
+    margin-bottom: 30px;
+
+}
+
+
+/* =====================================================
+   FEATURES
+===================================================== */
+
+.hero-features {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 14px;
+
+}
+
+
+.hero-feature {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.feature-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #e9f8ef;
+
+    color: #198754;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 19px;
+
+}
+
+
+.hero-feature strong {
+
+    display: block;
+
+    font-size: 15px;
+
+    color: #20252b;
+
+}
+
+
+.hero-feature small {
+
+    display: block;
+
+    color: #7b8490;
+
+    margin-top: 2px;
+
+}
+
+
+/* =====================================================
+   BUTTONS
+===================================================== */
+
+.hero-buttons {
+
+    display: flex;
+
+    gap: 12px;
+
+    flex-wrap: wrap;
+
+}
+
+
+.hero-shop-btn {
+
+    padding: 12px 25px;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+    border: none;
+
+}
+
+
+.hero-category-btn {
+
+    padding: 12px 25px;
+
+    border-radius: 8px;
+
+    font-weight: 600;
+
+}
+
+
+/* =====================================================
+   TRUST
+===================================================== */
+
+.hero-trust {
+
+    font-size: 13px;
+
+    color: #68727e;
+
+}
+
+
+.hero-trust i {
+
+    color: #198754;
+
+    margin-right: 5px;
+
+}
+
+
+/* =====================================================
+   IMAGE AREA
+===================================================== */
+
+.hero-image-wrapper {
+
+    position: relative;
+
+    padding: 20px;
+
+}
+
+
+.hero-circle {
+
+    position: absolute;
+
+    width: 430px;
+
+    height: 430px;
+
+    border-radius: 50%;
+
+    background: #dff4e7;
+
+    top: 50%;
+
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    z-index: 0;
+
+}
+
+
+/* =====================================================
+   MAIN IMAGE
+===================================================== */
+
+.hero-main-image {
+
+    position: relative;
+
+    z-index: 2;
+
+    width: 100%;
+
+    height: 500px;
+
+    object-fit: cover;
+
+    border-radius: 25px;
+
+    box-shadow:
+        0 25px 60px rgba(0, 0, 0, 0.15);
+
+}
+
+
+/* =====================================================
+   FLOATING CARDS
+===================================================== */
+
+.hero-floating-card {
+
+    position: absolute;
+
+    z-index: 5;
+
+    background: #ffffff;
+
+    border-radius: 14px;
+
+    box-shadow:
+        0 15px 40px rgba(0, 0, 0, 0.12);
+
+}
+
+
+/* =====================================================
+   DELIVERY CARD
+===================================================== */
+
+.delivery-card {
+
+    left: -5px;
+
+    bottom: 55px;
+
+    padding: 13px 18px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+}
+
+
+.floating-icon {
+
+    width: 42px;
+
+    height: 42px;
+
+    border-radius: 50%;
+
+    background: #e8f7ef;
+
+    color: #198754;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    font-size: 18px;
+
+}
+
+
+.delivery-card strong {
+
+    display: block;
+
+    font-size: 14px;
+
+}
+
+
+.delivery-card small {
+
+    display: block;
+
+    color: #7b8490;
+
+    font-size: 12px;
+
+}
+
+
+/* =====================================================
+   QUALITY CARD
+===================================================== */
+
+.quality-card {
+
+    right: -5px;
+
+    top: 55px;
+
+    padding: 14px 18px;
+
+}
+
+
+.quality-stars {
+
+    color: #f5b301;
+
+    font-size: 14px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 3px;
+
+}
+
+
+.quality-card strong {
+
+    font-size: 13px;
+
+}
+
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
+@media (max-width: 991px) {
+
+    .hero-section {
+
+        padding: 60px 0;
+
+    }
+
+
+    .hero-image-wrapper {
+
+        margin-top: 30px;
+
+    }
+
+
+    .hero-circle {
+
+        width: 350px;
+
+        height: 350px;
+
+    }
+
+
+    .hero-main-image {
+
+        height: 400px;
+
+    }
+
+}
+
+
+@media (max-width: 575px) {
+
+    .hero-section {
+
+        padding: 45px 0 60px;
+
+    }
+
+
+    .hero-title {
+
+        font-size: 40px;
+
+    }
+
+
+    .hero-description {
+
+        font-size: 16px;
+
+    }
+
+
+    .hero-main-image {
+
+        height: 320px;
+
+        border-radius: 18px;
+
+    }
+
+
+    .hero-circle {
+
+        width: 280px;
+
+        height: 280px;
+
+    }
+
+
+    .delivery-card {
+
+        left: -5px;
+
+        bottom: 25px;
+
+    }
+
+
+    .quality-card {
+
+        right: -5px;
+
+        top: 25px;
+
+    }
+
+}
+
+</style>

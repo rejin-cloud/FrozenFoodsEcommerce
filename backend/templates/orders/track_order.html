@@ -1,0 +1,213 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+/* Order Progress Tracker */
+.order-tracker {
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    margin: 40px 0;
+}
+
+.order-tracker-line {
+    position: absolute;
+    top: 20px;
+    left: 10%;
+    right: 10%;
+    height: 4px;
+    background-color: #e0e0e0;
+    z-index: 1;
+}
+
+.order-tracker-progress {
+    position: absolute;
+    top: 20px;
+    left: 10%;
+    height: 4px;
+    background-color: #198754;
+    z-index: 1;
+    transition: width 0.4s ease;
+}
+
+.tracker-step {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    width: 20%;
+}
+
+.tracker-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #e0e0e0;
+    color: #6c757d;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 10px;
+    font-weight: bold;
+    font-size: 16px;
+    transition: all 0.3s ease;
+}
+
+.tracker-step.completed .tracker-icon {
+    background-color: #198754;
+    color: #ffffff;
+}
+
+.tracker-step.active .tracker-icon {
+    background-color: #0d6efd;
+    color: #ffffff;
+    box-shadow: 0 0 0 5px rgba(13, 110, 253, 0.2);
+}
+
+.tracker-label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6c757d;
+}
+
+.tracker-step.completed .tracker-label,
+.tracker-step.active .tracker-label {
+    color: #212529;
+}
+</style>
+
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h2 class="fw-bold m-0">Track Order #{{ order.id }}</h2>
+            <p class="text-muted m-0">Placed on {{ order.created_at|date:"d M Y, h:i A" }}</p>
+        </div>
+        <div>
+            <a href="{% url 'accounts:orders' %}" class="btn btn-outline-secondary me-2">Back to Orders</a>
+            <a href="{% url 'orders:download_invoice_pdf' order.id %}" class="btn btn-outline-success">Download Invoice</a>
+        </div>
+    </div>
+
+    <!-- Status Tracker Card -->
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body p-4">
+            <h5 class="fw-bold mb-3">Order Status</h5>
+
+            {% if order.status == 'Cancelled' %}
+                <div class="alert alert-danger text-center my-3 py-3" role="alert">
+                    <strong>This order was cancelled.</strong>
+                </div>
+            {% else %}
+                <div class="order-tracker">
+                    <div class="order-tracker-line"></div>
+                    <div class="order-tracker-progress" style="width: 
+                        {% if order.status == 'Completed' %}80%
+                        {% elif order.status == 'Delivered' %}60%
+                        {% elif order.status == 'Shipped' %}40%
+                        {% elif order.status == 'Processing' %}20%
+                        {% else %}0%{% endif %};">
+                    </div>
+
+                    <!-- Step 1: Pending -->
+                    <div class="tracker-step {% if order.status == 'Pending' %}active{% else %}completed{% endif %}">
+                        <div class="tracker-icon">
+                            {% if order.status == 'Pending' %}1{% else %}✓{% endif %}
+                        </div>
+                        <div class="tracker-label">Pending</div>
+                    </div>
+
+                    <!-- Step 2: Processing -->
+                    <div class="tracker-step {% if order.status == 'Processing' %}active{% elif order.status == 'Shipped' or order.status == 'Delivered' or order.status == 'Completed' %}completed{% endif %}">
+                        <div class="tracker-icon">
+                            {% if order.status == 'Shipped' or order.status == 'Delivered' or order.status == 'Completed' %}✓{% else %}2{% endif %}
+                        </div>
+                        <div class="tracker-label">Processing</div>
+                    </div>
+
+                    <!-- Step 3: Shipped -->
+                    <div class="tracker-step {% if order.status == 'Shipped' %}active{% elif order.status == 'Delivered' or order.status == 'Completed' %}completed{% endif %}">
+                        <div class="tracker-icon">
+                            {% if order.status == 'Delivered' or order.status == 'Completed' %}✓{% else %}3{% endif %}
+                        </div>
+                        <div class="tracker-label">Shipped</div>
+                    </div>
+
+                    <!-- Step 4: Delivered -->
+                    <div class="tracker-step {% if order.status == 'Delivered' %}active{% elif order.status == 'Completed' %}completed{% endif %}">
+                        <div class="tracker-icon">
+                            {% if order.status == 'Completed' %}✓{% else %}4{% endif %}
+                        </div>
+                        <div class="tracker-label">Delivered</div>
+                    </div>
+
+                    <!-- Step 5: Completed -->
+                    <div class="tracker-step {% if order.status == 'Completed' %}completed{% endif %}">
+                        <div class="tracker-icon">
+                            {% if order.status == 'Completed' %}✓{% else %}5{% endif %}
+                        </div>
+                        <div class="tracker-label">Completed</div>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Details Grid -->
+    <div class="row">
+        <div class="col-md-8">
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">Items in this Order</h5>
+                    <table class="table align-middle">
+                        <thead>
+                            <tr>
+                                <th>Item</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th class="text-end">Subtotal</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr>
+                                <td>
+                                    <strong>{{ item.product_name }}</strong><br>
+                                    <small class="text-muted">Variant: {{ item.variant_name }}</small>
+                                </td>
+                                <td>₹{{ item.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td class="text-end">₹{% widthratio item.price 1 item.quantity %}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="text-end fw-bold fs-5 mt-3">
+                        Total Amount: ₹{{ order.total_amount }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4">
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-3">Delivery Info</h5>
+                    <p class="mb-1"><strong>{{ order.full_name }}</strong></p>
+                    <p class="mb-1 text-muted">{{ order.address }}</p>
+                    <p class="mb-1 text-muted">{{ order.city }} - {{ order.pincode }}</p>
+                    <p class="mb-3 text-muted">Phone: {{ order.phone }}</p>
+                    
+                    <hr>
+                    
+                    <h6 class="fw-bold">Payment Details</h6>
+                    <p class="mb-1">Method: {{ order.get_payment_method_display }}</p>
+                    <p class="mb-0">Payment Status: 
+                        <span class="badge {% if order.is_paid %}bg-success{% else %}bg-warning text-dark{% endif %}">
+                            {% if order.is_paid %}Paid{% else %}Pending / COD{% endif %}
+                        </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <h2 class="fw-bold mb-4">
+        Shopping Cart
+    </h2>
+
+    {% if items %}
+
+    {% csrf_token %}
+
+    <table class="table table-bordered align-middle">
+        <thead>
+            <tr>
+                <th>Product</th>
+                <th>Variant</th>
+                <th>Price</th>
+                <th width="180">Quantity</th>
+                <th>Subtotal</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in items %}
+            <tr id="row-{{ item.id }}">
+                <td>
+                    {{ item.variant.product.name }}
+                </td>
+
+                <td>
+                    {{ item.variant.variant_name }}
+                </td>
+
+                <td>
+                    ₹{{ item.price }}
+                </td>
+
+                <td>
+                    <button
+                        class="btn btn-sm btn-outline-secondary decrease"
+                        data-id="{{ item.id }}">
+                        -
+                    </button>
+
+                    <span
+                        id="qty-{{ item.id }}"
+                        class="mx-2">
+                        {{ item.quantity }}
+                    </span>
+
+                    <button
+                        class="btn btn-sm btn-outline-secondary increase"
+                        data-id="{{ item.id }}"
+                        data-stock="{{ item.variant.stock }}"
+                        {% if item.quantity >= item.variant.stock %}disabled{% endif %}>
+                        +
+                    </button>
+                </td>
+
+                <td>
+                    ₹<span id="subtotal-{{ item.id }}">
+                        {{ item.subtotal }}
+                    </span>
+                </td>
+
+                <td>
+                    <button
+                        class="btn btn-danger btn-sm remove-item"
+                        data-id="{{ item.id }}">
+                        Remove
+                    </button>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="text-end">
+        <h3>
+            Grand Total : ₹<span id="grand-total">{{ total }}</span>
+        </h3>
+        <a href="{% url 'orders:checkout' %}" class="btn btn-success btn-lg">
+            Proceed to Checkout
+        </a>
+    </div>
+
+    {% else %}
+
+    <div class="text-center py-5">
+        <h3>Your Cart is Empty</h3>
+    </div>
+
+    {% endif %}
+
+</div>
+
+<script>
+const csrftoken = document.querySelector("[name=csrfmiddlewaretoken]") ? document.querySelector("[name=csrfmiddlewaretoken]").value : "";
+
+// Increase
+document.querySelectorAll(".increase").forEach(button => {
+    button.onclick = function() {
+        updateCart(this.dataset.id, "increase");
+    }
+});
+
+// Decrease
+document.querySelectorAll(".decrease").forEach(button => {
+    button.onclick = function() {
+        updateCart(this.dataset.id, "decrease");
+    }
+});
+
+// Remove
+document.querySelectorAll(".remove-item").forEach(button => {
+    button.onclick = function() {
+        const itemId = this.dataset.id;
+        fetch("/cart/remove/", {
+            method: "POST",
+            headers: {
+                "X-CSRFToken": csrftoken
+            },
+            body: new URLSearchParams({
+                item_id: itemId
+            })
+        })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                const row = document.getElementById("row-" + itemId);
+                if (row) row.remove();
+
+                const grandTotal = document.getElementById("grand-total");
+                if (grandTotal) grandTotal.innerHTML = data.total;
+
+                if (document.querySelectorAll("tbody tr").length === 0) {
+                    location.reload();
+                }
+            }
+        });
+    }
+});
+
+function updateCart(id, action) {
+    const increaseBtn = document.querySelector(`.increase[data-id="${id}"]`);
+
+    fetch("/cart/update/", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": csrftoken
+        },
+        body: new URLSearchParams({
+            item_id: id,
+            action: action
+        })
+    })
+    .then(async r => {
+        const data = await r.json();
+        if (!r.ok || !data.success) {
+            alert(data.message || "Cannot update quantity.");
+            if (increaseBtn && data.message && data.message.includes("Maximum available stock")) {
+                increaseBtn.disabled = true;
+            }
+            return;
+        }
+
+        // Update UI elements
+        document.getElementById("qty-" + id).innerHTML = data.quantity;
+        document.getElementById("subtotal-" + id).innerHTML = data.subtotal;
+        document.getElementById("grand-total").innerHTML = data.total;
+
+        // Toggle increase button state based on remaining stock
+        if (increaseBtn) {
+            const maxStock = parseInt(increaseBtn.dataset.stock, 10);
+            if (data.quantity >= maxStock) {
+                increaseBtn.disabled = true;
+            } else {
+                increaseBtn.disabled = false;
+            }
+        }
+    })
+    .catch(err => {
+        console.error("Cart update error:", err);
+    });
+}
+</script>
+
+{% endblock %}

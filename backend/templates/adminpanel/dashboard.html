@@ -1,0 +1,838 @@
+{% extends "adminpanel/admin_base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="d-flex justify-content-between align-items-center mb-5">
+
+        <div>
+
+            <h1 class="fw-bold mb-1">
+                Meami.in Admin Dashboard
+            </h1>
+
+            <p class="text-muted mb-0">
+                Manage your ecommerce store
+            </p>
+
+        </div>
+
+        <a
+            href="/"
+            class="btn btn-outline-success">
+
+            <i class="bi bi-shop"></i>
+            View Store
+
+        </a>
+
+    </div>
+
+
+    <!-- ================= STAT CARDS ================= -->
+
+    <div class="row g-4">
+
+
+        <!-- PRODUCTS -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Products
+                            </p>
+
+                            <h2 class="fw-bold mb-3">
+                                {{ product_count }}
+                            </h2>
+
+                        </div>
+
+                        <div class="fs-1 text-success">
+                            <i class="bi bi-box-seam"></i>
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="{% url 'adminpanel:products' %}"
+                        class="btn btn-success btn-sm">
+
+                        Manage Products
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CATEGORIES -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Categories
+                            </p>
+
+                            <h2 class="fw-bold mb-3">
+                                {{ category_count }}
+                            </h2>
+
+                        </div>
+
+                        <div class="fs-1 text-primary">
+                            <i class="bi bi-grid"></i>
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="{% url 'adminpanel:categories' %}"
+                        class="btn btn-primary btn-sm">
+
+                        Manage Categories
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ORDERS -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Orders
+                            </p>
+
+                            <h2 class="fw-bold mb-3">
+                                {{ order_count }}
+                            </h2>
+
+                        </div>
+
+                        <div class="fs-1 text-warning">
+                            <i class="bi bi-cart-check"></i>
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="{% url 'adminpanel:orders' %}"
+                        class="btn btn-warning btn-sm">
+
+                        Manage Orders
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- CUSTOMERS -->
+
+        <div class="col-lg-3 col-md-6">
+
+            <div class="card border-0 shadow-sm h-100">
+
+                <div class="card-body">
+
+                    <div class="d-flex justify-content-between align-items-center">
+
+                        <div>
+
+                            <p class="text-muted mb-1">
+                                Customers
+                            </p>
+
+                            <h2 class="fw-bold mb-3">
+                                {{ customer_count }}
+                            </h2>
+
+                        </div>
+
+                        <div class="fs-1 text-danger">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                    </div>
+
+                    <a
+                        href="{% url 'adminpanel:customers' %}"
+                        class="btn btn-danger btn-sm">
+
+                        Manage Customers
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= QUICK ACTIONS ================= -->
+
+    <div class="mt-5">
+
+        <h3 class="fw-bold mb-4">
+            Quick Actions
+        </h3>
+
+        <div class="row g-3">
+
+
+            <!-- PRODUCTS -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <a
+                    href="{% url 'adminpanel:products' %}"
+                    class="btn btn-outline-success w-100 py-3">
+
+                    <i class="bi bi-box-seam"></i>
+
+                    Manage Products
+
+                </a>
+
+            </div>
+
+
+            <!-- CATEGORIES -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <a
+                    href="{% url 'adminpanel:categories' %}"
+                    class="btn btn-outline-primary w-100 py-3">
+
+                    <i class="bi bi-grid"></i>
+
+                    Manage Categories
+
+                </a>
+
+            </div>
+
+
+            <!-- ORDERS -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <a
+                    href="{% url 'adminpanel:orders' %}"
+                    class="btn btn-outline-warning w-100 py-3">
+
+                    <i class="bi bi-receipt"></i>
+
+                    View Orders
+
+                </a>
+
+            </div>
+
+
+            <!-- CUSTOMERS -->
+
+            <div class="col-lg-3 col-md-6">
+
+                <a
+                    href="{% url 'adminpanel:customers' %}"
+                    class="btn btn-outline-danger w-100 py-3">
+
+                    <i class="bi bi-people"></i>
+
+                    View Customers
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= ORDER REPORTS ================= -->
+
+    <div class="mt-5">
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <h3 class="fw-bold mb-1">
+                    Order Reports
+                </h3>
+
+                <p class="text-muted mb-0">
+                    Analyze customer orders and sales activity
+                </p>
+
+            </div>
+
+            <i class="bi bi-bar-chart-line fs-1 text-success"></i>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <!-- LAST DAY -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <h5 class="fw-bold mb-0">
+                                Last Day
+                            </h5>
+
+                            <i class="bi bi-calendar-day fs-3 text-primary"></i>
+
+                        </div>
+
+                        <p class="text-muted">
+
+                            View all orders received during the last 24 hours.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:orders' %}"
+                            class="btn btn-outline-primary">
+
+                            <i class="bi bi-eye"></i>
+                            View Report
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LAST 7 DAYS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <h5 class="fw-bold mb-0">
+                                Last 7 Days
+                            </h5>
+
+                            <i class="bi bi-calendar-week fs-3 text-success"></i>
+
+                        </div>
+
+                        <p class="text-muted">
+
+                            View orders and sales from the previous seven days.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:orders' %}"
+                            class="btn btn-outline-success">
+
+                            <i class="bi bi-eye"></i>
+                            View Report
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- LAST MONTH -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+
+                            <h5 class="fw-bold mb-0">
+                                Last Month
+                            </h5>
+
+                            <i class="bi bi-calendar-month fs-3 text-warning"></i>
+
+                        </div>
+
+                        <p class="text-muted">
+
+                            View detailed orders and sales from the previous month.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:orders' %}"
+                            class="btn btn-outline-warning">
+
+                            <i class="bi bi-eye"></i>
+                            View Report
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STORE MANAGEMENT ================= -->
+
+    <div class="mt-5">
+
+        <h3 class="fw-bold mb-4">
+            Store Management
+        </h3>
+
+
+        <div class="row g-4">
+
+
+            <!-- PRODUCT MANAGEMENT -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-box-seam text-success"></i>
+
+                            Product Management
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Add, edit and manage your frozen food products.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:products' %}"
+                            class="btn btn-success">
+
+                            Manage Products
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CATEGORY MANAGEMENT -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-grid text-primary"></i>
+
+                            Category Management
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Manage fish, chicken, beef and other categories.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:categories' %}"
+                            class="btn btn-primary">
+
+                            Manage Categories
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER MANAGEMENT -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-cart-check text-warning"></i>
+
+                            Order Management
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            View and manage customer orders.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:orders' %}"
+                            class="btn btn-warning">
+
+                            Manage Orders
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CUSTOMER MANAGEMENT -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-people text-danger"></i>
+
+                            Customer Management
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            View and manage registered customers.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:customers' %}"
+                            class="btn btn-danger">
+
+                            Manage Customers
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CART MANAGEMENT -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-cart text-success"></i>
+
+                            Cart Management
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            View and manage active customer shopping carts.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:carts' %}"
+                            class="btn btn-success">
+
+                            Manage Carts
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CART ITEMS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-basket text-success"></i>
+
+                            Cart Items
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            View products and quantities currently inside carts.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:cart_items' %}"
+                            class="btn btn-success">
+
+                            Manage Cart Items
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT IMAGES -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-images text-info"></i>
+
+                            Product Images
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Upload and manage product gallery images.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:product_images' %}"
+                            class="btn btn-info">
+
+                            Manage Images
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- PRODUCT VARIANTS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-tags text-secondary"></i>
+
+                            Product Variants
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Manage product sizes, prices, stock and SKUs.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:product_variants' %}"
+                            class="btn btn-secondary">
+
+                            Manage Variants
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- ORDER REPORTS -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-bar-chart-line text-success"></i>
+
+                            Order Reports
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            View daily, weekly and monthly order reports with detailed order information.
+
+                        </p>
+
+                        <a
+                            href="{% url 'adminpanel:order_reports' %}"
+                            class="btn btn-success">
+
+                            View Reports
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- VIEW STORE -->
+
+            <div class="col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100">
+
+                    <div class="card-body">
+
+                        <h5 class="fw-bold">
+
+                            <i class="bi bi-shop text-dark"></i>
+
+                            Store
+
+                        </h5>
+
+                        <p class="text-muted">
+
+                            Open the customer-facing Frozen Foods store.
+
+                        </p>
+
+                        <a
+                            href="/"
+                            class="btn btn-dark">
+
+                            View Store
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+{% endblock %}

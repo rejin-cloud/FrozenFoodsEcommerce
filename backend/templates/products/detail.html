@@ -1,0 +1,369 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="row">
+
+        <!-- LEFT SIDE -->
+
+        <div class="col-lg-6">
+
+            <div class="border rounded p-2 mb-3">
+
+                {% if product.primary_image %}
+
+                <img
+                    id="main-image"
+                    src="{{ product.primary_image.image.url }}"
+                    class="img-fluid w-100"
+                    style="height:500px;object-fit:cover;">
+
+                {% endif %}
+
+            </div>
+
+            <div class="row">
+
+                {% for image in gallery %}
+
+                <div class="col-3 mb-3">
+
+                    <img
+                        src="{{ image.image.url }}"
+                        class="img-fluid border rounded thumbnail"
+                        style="cursor:pointer;">
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+
+        <div class="col-lg-6">
+
+            <h2 class="fw-bold">
+
+                {{ product.name }}
+
+            </h2>
+
+            <p class="text-muted">
+
+                {{ product.brand }}
+
+            </p>
+
+            <hr>
+
+            {% with first_variant=variants.first %}
+
+            <h3
+                id="product-price"
+                class="text-success">
+
+                ₹{{ first_variant.selling_price }}
+
+            </h3>
+
+            <p>
+
+                MRP :
+
+                <del id="product-mrp">
+
+                    ₹{{ first_variant.mrp }}
+
+                </del>
+
+            </p>
+
+            {% endwith %}
+
+            <hr>
+
+            <h5>
+
+                Available Sizes
+
+            </h5>
+
+            <div class="mb-4">
+
+                {% for variant in variants %}
+
+                <button
+                    class="btn btn-outline-success me-2 mb-2 variant-btn {% if forloop.first %}active{% endif %} {% if variant.stock <= 0 %}border-secondary text-secondary{% endif %}"
+                    data-id="{{ variant.id }}"
+                    data-price="{{ variant.selling_price }}"
+                    data-mrp="{{ variant.mrp }}"
+                    data-stock="{{ variant.stock }}">
+
+                    {{ variant.variant_name }}
+                    {% if variant.stock <= 0 %}
+                    <small>(Out of Stock)</small>
+                    {% endif %}
+
+                </button>
+
+                {% endfor %}
+
+            </div>
+
+            <h6
+                id="stock-status"
+                class="fw-bold">
+
+                In Stock
+
+            </h6>
+
+            <div class="d-flex align-items-center mb-4">
+
+                <button
+                    class="btn btn-outline-secondary"
+                    id="minus-btn">
+
+                    -
+
+                </button>
+
+                <input
+                    id="quantity"
+                    class="form-control text-center mx-2"
+                    style="width:70px;"
+                    value="1"
+                    readonly>
+
+                <button
+                    class="btn btn-outline-secondary"
+                    id="plus-btn">
+
+                    +
+
+                </button>
+
+            </div>
+
+            {% csrf_token %}
+
+            <div class="d-flex align-items-center gap-2 flex-wrap">
+
+                <button
+                    class="btn btn-success btn-lg"
+                    id="add-cart">
+
+                    Add To Cart
+
+                </button>
+
+                <button
+                    class="btn btn-warning btn-lg"
+                    id="buy-now">
+
+                    Buy Now
+
+                </button>
+
+                <!-- Wishlist Toggle Button -->
+                {% if user.is_authenticated %}
+                    <a href="{% url 'products:toggle_wishlist' product.id %}" 
+                       class="btn btn-outline-danger btn-lg {% if is_in_wishlist %}active{% endif %}"
+                       id="wishlist-btn">
+                       {% if is_in_wishlist %}
+                           ❤️ Saved
+                       {% else %}
+                           🤍 Wishlist
+                       {% endif %}
+                    </a>
+                {% else %}
+                    <a href="{% url 'accounts:login' %}?next={{ request.path }}" 
+                       class="btn btn-outline-secondary btn-lg" 
+                       title="Log in to save items">
+                       🤍 Wishlist
+                    </a>
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="mt-5">
+
+        <h3>Description</h3>
+
+        <hr>
+
+        <p>
+
+            {{ product.description }}
+
+        </p>
+
+    </div>
+
+</div>
+
+<script>
+
+// -----------------------------
+// State Variables & Elements
+// -----------------------------
+let quantity = 1;
+let currentStock = 0;
+let selectedVariant = null;
+
+const qtyInput = document.getElementById("quantity");
+const addCartBtn = document.getElementById("add-cart");
+const buyNowBtn = document.getElementById("buy-now");
+const plusBtn = document.getElementById("plus-btn");
+const minusBtn = document.getElementById("minus-btn");
+const stockStatus = document.getElementById("stock-status");
+
+
+// -----------------------------
+// Update Stock UI Function
+// -----------------------------
+function updateStockUI(stock) {
+    currentStock = parseInt(stock) || 0;
+
+    if (currentStock > 0) {
+        stockStatus.innerHTML = "In Stock";
+        stockStatus.className = "fw-bold text-success";
+
+        addCartBtn.disabled = false;
+        buyNowBtn.disabled = false;
+        plusBtn.disabled = false;
+        minusBtn.disabled = false;
+
+        // Reset quantity to 1 if it exceeds available stock
+        if (quantity > currentStock) {
+            quantity = currentStock;
+            qtyInput.value = quantity;
+        }
+    } else {
+        stockStatus.innerHTML = "Out of Stock";
+        stockStatus.className = "fw-bold text-danger";
+
+        addCartBtn.disabled = true;
+        buyNowBtn.disabled = true;
+        plusBtn.disabled = true;
+        minusBtn.disabled = true;
+
+        quantity = 1;
+        qtyInput.value = quantity;
+    }
+}
+
+
+// -----------------------------
+// Quantity Selector
+// -----------------------------
+plusBtn.onclick = function () {
+    if (quantity < currentStock) {
+        quantity++;
+        qtyInput.value = quantity;
+    } else {
+        alert("Cannot add more than available stock (" + currentStock + ").");
+    }
+};
+
+minusBtn.onclick = function () {
+    if (quantity > 1) {
+        quantity--;
+        qtyInput.value = quantity;
+    }
+};
+
+
+// -----------------------------
+// Variant Selection
+// -----------------------------
+function selectVariant(button) {
+    document.querySelectorAll(".variant-btn").forEach(btn => {
+        btn.classList.remove("active");
+    });
+
+    button.classList.add("active");
+
+    selectedVariant = button.dataset.id;
+
+    document.getElementById("product-price").innerHTML = "₹" + button.dataset.price;
+    document.getElementById("product-mrp").innerHTML = "₹" + button.dataset.mrp;
+
+    updateStockUI(button.dataset.stock);
+}
+
+document.querySelectorAll(".variant-btn").forEach(button => {
+    button.onclick = function () {
+        selectVariant(this);
+    };
+});
+
+// Initialize on page load with first active variant
+const activeVariant = document.querySelector(".variant-btn.active") || document.querySelector(".variant-btn");
+if (activeVariant) {
+    selectVariant(activeVariant);
+}
+
+
+// -----------------------------
+// Thumbnail Gallery
+// -----------------------------
+document.querySelectorAll(".thumbnail").forEach(image => {
+    image.onclick = function () {
+        document.getElementById("main-image").src = this.src;
+    };
+});
+
+
+// -----------------------------
+// Add To Cart
+// -----------------------------
+addCartBtn.onclick = function () {
+    if (currentStock <= 0) {
+        alert("This item is currently out of stock.");
+        return;
+    }
+
+    const csrf = document.querySelector("[name=csrfmiddlewaretoken]").value;
+
+    fetch("/cart/add/", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": csrf,
+            "Content-Type": "application/x-www-form-urlencoded"
+        },
+        body: new URLSearchParams({
+            variant_id: selectedVariant,
+            quantity: quantity
+        })
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+
+        if (data.success) {
+            // Update Navbar Badge
+            const badge = document.getElementById("cart-count");
+            if (badge) {
+                badge.innerHTML = data.cart_count;
+            }
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert("Something went wrong.");
+    });
+};
+
+</script>
+
+{% endblock %}

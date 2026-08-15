@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row">
+        <!-- Sidebar Navigation -->
+        <div class="col-md-3 mb-4">
+            <div class="list-group shadow-sm">
+                <a href="{% url 'accounts:profile' %}" class="list-group-item list-group-item-action">
+                    Profile & Saved Address
+                </a>
+                <a href="{% url 'accounts:orders' %}" class="list-group-item list-group-item-action active bg-success border-success">
+                    My Orders
+                </a>
+                <a href="{% url 'accounts:logout' %}" class="list-group-item list-group-item-action text-danger">
+                    Logout
+                </a>
+
+                <a href="{% url 'orders:download_invoice_pdf' order.id %}" class="btn btn-outline-success">
+    <i class="bi bi-file-earmark-pdf"></i> Download PDF Invoice
+</a>
+            </div>
+        </div>
+
+        <!-- Order Detail / Receipt Card -->
+        <div class="col-md-9">
+            <div class="card p-4 shadow-sm border-0">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="fw-bold m-0">Order Receipt #{{ order.id }}</h4>
+                    <a href="{% url 'accounts:orders' %}" class="btn btn-sm btn-outline-secondary">
+                        &larr; Back to Orders
+                    </a>
+                </div>
+
+                <hr class="text-muted">
+
+                <!-- Order Info & Address Summary -->
+                <div class="row mb-4">
+                    <div class="col-md-6">
+                        <h6 class="fw-bold text-success mb-2">Delivery Details</h6>
+                        <p class="mb-1"><strong>{{ order.full_name|default:request.user.get_full_name }}</strong></p>
+                        <p class="mb-1 text-muted">{{ order.address }}</p>
+                        <p class="mb-1 text-muted">{{ order.city }} {% if order.pincode %}- {{ order.pincode }}{% endif %}</p>
+                        <p class="mb-0 text-muted">Phone: {{ order.phone|default:"N/A" }}</p>
+                    </div>
+                    <div class="col-md-6 text-md-end mt-3 mt-md-0">
+                        <h6 class="fw-bold text-success mb-2">Order Summary</h6>
+                        <p class="mb-1"><strong>Date:</strong> {{ order.created_at|date:"M d, Y" }}</p>
+                        <p class="mb-1">
+                            <strong>Payment:</strong> 
+                            {% if order.is_paid %}
+                            <span class="badge bg-success">Paid</span>
+                            {% else %}
+                            <span class="badge bg-warning text-dark">COD / Pending</span>
+                            {% endif %}
+                        </p>
+                        <p class="mb-0">
+                            <strong>Status:</strong> 
+                            <span class="badge {% if order.status == 'Completed' or order.status == 'Delivered' %}bg-success{% elif order.status == 'Processing' or order.status == 'Shipped' %}bg-primary{% else %}bg-secondary{% endif %}">
+                                {{ order.status }}
+                            </span>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Purchased Items Table -->
+                <h6 class="fw-bold mb-3">Items Ordered</h6>
+                <div class="table-responsive">
+                    <table class="table align-middle">
+                        <thead class="table-light">
+                            <tr>
+                                <th>Product</th>
+                                <th>Variant</th>
+                                <th>Price</th>
+                                <th>Qty</th>
+                                <th class="text-end">Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for item in order.items.all %}
+                            <tr>
+                                <td><strong>{{ item.product_name }}</strong></td>
+                                <td>{{ item.variant_name }}</td>
+                                <td>₹{{ item.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td class="text-end fw-bold">₹{% widthratio item.price 1 item.quantity %}</td>
+                            </tr>
+                            {% empty %}
+                            {% for item in order.orderitem_set.all %}
+                            <tr>
+                                <td><strong>{{ item.product_name }}</strong></td>
+                                <td>{{ item.variant_name }}</td>
+                                <td>₹{{ item.price }}</td>
+                                <td>{{ item.quantity }}</td>
+                                <td class="text-end fw-bold">₹{% widthratio item.price 1 item.quantity %}</td>
+                            </tr>
+                            {% empty %}
+                            <tr>
+                                <td colspan="5" class="text-center text-muted py-3">No item details available for this order.</td>
+                            </tr>
+                            {% endfor %}
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+
+                <hr class="text-muted">
+
+                <!-- Total Amount -->
+                <div class="d-flex justify-content-end mt-2">
+                    <div class="text-end">
+                        <h5 class="fw-bold m-0">Grand Total: <span class="text-success">₹{{ order.total_amount }}</span></h5>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

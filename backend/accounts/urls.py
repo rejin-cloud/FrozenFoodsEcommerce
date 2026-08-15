@@ -1,0 +1,18 @@
+from django.urls import path
+from . import views
+
+app_name = 'accounts'
+
+urlpatterns = [
+    path('register/', views.register_view, name='register'),
+    path('login/', views.login_view, name='login'),
+    path('logout/', views.logout_view, name='logout'),
+    path('profile/', views.profile_view, name='profile'),
+    path('orders/', views.user_orders_view, name='orders'),
+    path('orders/<int:order_id>/', views.order_detail_view, name='order_detail'),
+
+    # Address Management Routes
+    path('addresses/', views.manage_addresses_view, name='manage_addresses'),
+    path('addresses/delete/<int:address_id>/', views.delete_address_view, name='delete_address'),
+    path('addresses/set-default/<int:address_id>/', views.set_default_address_view, name='set_default_address'),
+]

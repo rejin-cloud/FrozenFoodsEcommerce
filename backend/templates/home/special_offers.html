@@ -1,0 +1,267 @@
+<section class="py-5">
+
+    <div class="container">
+
+        <!-- HEADER -->
+
+        <div class="d-flex justify-content-between align-items-center mb-4">
+
+            <div>
+
+                <span class="badge bg-danger px-3 py-2 mb-2">
+                    🔥 Limited Time Deals
+                </span>
+
+                <h2 class="fw-bold mb-1">
+                    Special Offers
+                </h2>
+
+                <p class="text-muted mb-0">
+                    Grab your favorite products at special prices.
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <!-- PRODUCTS -->
+
+        <div class="row g-4">
+
+            {% for product in special_offers %}
+
+            <div class="col-xl-3 col-lg-4 col-md-6">
+
+                <div class="card border-0 shadow-sm h-100 position-relative">
+
+
+                    <!-- DISCOUNT BADGE -->
+
+                    {% if product.discount_percentage %}
+
+                    <span
+                        class="position-absolute top-0 start-0 m-3 badge bg-danger px-3 py-2"
+                        style="z-index:5;"
+                    >
+                        {{ product.discount_percentage }}% OFF
+                    </span>
+
+                    {% endif %}
+
+
+                    <!-- WISHLIST -->
+
+                    {% if user.is_authenticated %}
+
+                    <a
+                        href="{% url 'products:toggle_wishlist' product.id %}"
+                        class="btn btn-sm btn-light position-absolute top-0 end-0 m-2 rounded-circle shadow-sm"
+                        style="
+                            z-index:10;
+                            width:36px;
+                            height:36px;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                        "
+                        title="Add to Wishlist"
+                    >
+
+                        {% if product.id in user_wishlist_ids %}
+                            ❤️
+                        {% else %}
+                            🤍
+                        {% endif %}
+
+                    </a>
+
+                    {% else %}
+
+                    <a
+                        href="{% url 'accounts:login' %}?next={{ request.path }}"
+                        class="btn btn-sm btn-light position-absolute top-0 end-0 m-2 rounded-circle shadow-sm"
+                        style="
+                            z-index:10;
+                            width:36px;
+                            height:36px;
+                            display:flex;
+                            align-items:center;
+                            justify-content:center;
+                        "
+                    >
+                        🤍
+                    </a>
+
+                    {% endif %}
+
+
+                    <!-- IMAGE -->
+
+                    {% if product.primary_image %}
+
+                    <a
+                        href="{% url 'products:product_detail' product.slug %}"
+                        class="d-block"
+                    >
+
+                        <img
+                            src="{{ product.primary_image.image.url }}"
+                            class="card-img-top"
+                            alt="{{ product.name }}"
+                            style="
+                                height:240px;
+                                object-fit:cover;
+                            "
+                        >
+
+                    </a>
+
+                    {% else %}
+
+                    <div
+                        class="bg-light d-flex align-items-center justify-content-center"
+                        style="height:240px;"
+                    >
+
+                        <i class="bi bi-image fs-1 text-muted"></i>
+
+                    </div>
+
+                    {% endif %}
+
+
+                    <!-- DETAILS -->
+
+                    <div class="card-body d-flex flex-column">
+
+
+                        {% if product.brand %}
+
+                        <small class="text-muted">
+                            {{ product.brand }}
+                        </small>
+
+                        {% endif %}
+
+
+                        <h5 class="fw-bold mt-2">
+
+                            <a
+                                href="{% url 'products:product_detail' product.slug %}"
+                                class="text-decoration-none text-dark"
+                            >
+
+                                {{ product.name }}
+
+                            </a>
+
+                        </h5>
+
+
+                        <!-- PRICE -->
+
+                        <div class="mt-2">
+
+                            <span class="fs-5 fw-bold text-success">
+
+                                ₹{{ product.starting_price }}
+
+                            </span>
+
+
+                            {% if product.mrp_price %}
+
+                            <span
+                                class="text-muted text-decoration-line-through ms-2"
+                            >
+
+                                ₹{{ product.mrp_price }}
+
+                            </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- SAVING -->
+
+                        {% if product.discount_percentage %}
+
+                        <small class="text-success mt-2">
+
+                            You save
+
+                            ₹{{ product.mrp_price|add:"-"|add:product.starting_price }}
+
+                        </small>
+
+                        {% endif %}
+
+
+                        <!-- BUTTON -->
+
+                        <div class="mt-auto pt-3">
+
+                            {% if product.is_in_stock %}
+
+                            <a
+                                href="{% url 'products:product_detail' product.slug %}"
+                                class="btn btn-danger w-100"
+                            >
+
+                                View Deal
+
+                            </a>
+
+                            {% else %}
+
+                            <button
+                                class="btn btn-secondary w-100"
+                                disabled
+                            >
+
+                                Out of Stock
+
+                            </button>
+
+                            {% endif %}
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            {% empty %}
+
+            <div class="col-12">
+
+                <div class="text-center py-5">
+
+                    <i class="bi bi-tag fs-1 text-muted"></i>
+
+                    <h5 class="fw-bold mt-3">
+                        No Special Offers Right Now
+                    </h5>
+
+                    <p class="text-muted">
+                        Check back soon for exciting deals.
+                    </p>
+
+                </div>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </div>
+
+</section>

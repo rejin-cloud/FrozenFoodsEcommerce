@@ -1,0 +1,294 @@
+{% extends "adminpanel/admin_base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold mb-1">
+                Categories
+            </h1>
+
+            <p class="text-muted mb-0">
+                Manage your product categories
+            </p>
+
+        </div>
+
+        <div>
+
+            <a
+                href="{% url 'adminpanel:dashboard' %}"
+                class="btn btn-outline-secondary me-2">
+
+                <i class="bi bi-arrow-left"></i>
+                Dashboard
+
+            </a>
+
+            <a
+                href="{% url 'adminpanel:add_category' %}"
+                class="btn btn-success">
+
+                <i class="bi bi-plus-circle"></i>
+                Add Category
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- MESSAGES -->
+
+    {% if messages %}
+
+        {% for message in messages %}
+
+            <div
+                class="alert alert-success alert-dismissible fade show"
+                role="alert">
+
+                {{ message }}
+
+                <button
+                    type="button"
+                    class="btn-close"
+                    data-bs-dismiss="alert">
+                </button>
+
+            </div>
+
+        {% endfor %}
+
+    {% endif %}
+
+
+    <!-- CATEGORY TABLE -->
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Image</th>
+
+                            <th>Category</th>
+
+                            <th>Slug</th>
+
+                            <th>Products</th>
+
+                            <th>Status</th>
+
+                            <th>Actions</th>
+
+                        </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+                        {% for category in categories %}
+
+                        <tr>
+
+                            <!-- NUMBER -->
+
+                            <td>
+                                {{ forloop.counter }}
+                            </td>
+
+
+                            <!-- IMAGE -->
+
+                            <td>
+
+                                {% if category.image %}
+
+                                    <img
+                                        src="{{ category.image.url }}"
+                                        alt="{{ category.name }}"
+                                        style="
+                                            width:70px;
+                                            height:55px;
+                                            object-fit:cover;
+                                            border-radius:8px;
+                                        "
+                                    >
+
+                                {% else %}
+
+                                    <div
+                                        class="bg-light d-flex align-items-center justify-content-center"
+                                        style="
+                                            width:70px;
+                                            height:55px;
+                                            border-radius:8px;
+                                        ">
+
+                                        <i class="bi bi-image text-muted"></i>
+
+                                    </div>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- CATEGORY -->
+
+                            <td>
+
+                                <strong>
+                                    {{ category.name }}
+                                </strong>
+
+                                {% if category.description %}
+
+                                    <br>
+
+                                    <small class="text-muted">
+
+                                        {{ category.description|truncatechars:60 }}
+
+                                    </small>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- SLUG -->
+
+                            <td>
+
+                                <code>
+                                    {{ category.slug }}
+                                </code>
+
+                            </td>
+
+
+                            <!-- PRODUCT COUNT -->
+
+                            <td>
+
+                                {{ category.products.count }}
+
+                            </td>
+
+
+                            <!-- STATUS -->
+
+                            <td>
+
+                                {% if category.is_active %}
+
+                                    <span class="badge bg-success">
+                                        Active
+                                    </span>
+
+                                {% else %}
+
+                                    <span class="badge bg-danger">
+                                        Inactive
+                                    </span>
+
+                                {% endif %}
+
+                            </td>
+
+
+                            <!-- ACTIONS -->
+
+                            <td>
+
+                                <a
+                                    href="{% url 'adminpanel:edit_category' category.id %}"
+                                    class="btn btn-sm btn-outline-primary me-1"
+                                    title="Edit">
+
+                                    <i class="bi bi-pencil"></i>
+
+                                </a>
+
+
+                                <a
+                                    href="{% url 'adminpanel:delete_category' category.id %}"
+                                    class="btn btn-sm btn-outline-danger"
+                                    title="Delete">
+
+                                    <i class="bi bi-trash"></i>
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+
+                        {% empty %}
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="text-center py-5">
+
+                                <i
+                                    class="bi bi-grid fs-1 text-muted">
+                                </i>
+
+                                <h5 class="mt-3">
+                                    No categories found
+                                </h5>
+
+                                <p class="text-muted">
+                                    Add your first category.
+                                </p>
+
+                                <a
+                                    href="{% url 'adminpanel:add_category' %}"
+                                    class="btn btn-success">
+
+                                    <i class="bi bi-plus-circle"></i>
+                                    Add Category
+
+                                </a>
+
+                            </td>
+
+                        </tr>
+
+                        {% endfor %}
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,275 @@
+{% extends "base.html" %}
+
+{% block title %}
+    {{ category.name }} | Frozen Foods
+{% endblock %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="d-flex justify-content-between align-items-center mb-5">
+
+        <div>
+            <h1 class="fw-bold mb-2">
+                {{ category.name }}
+            </h1>
+
+            <p class="text-muted mb-0">
+                Fresh and frozen {{ category.name|lower }} products
+            </p>
+        </div>
+
+        <a
+            href="{% url 'home' %}"
+            class="btn btn-outline-success">
+
+            ← Back to Home
+
+        </a>
+
+    </div>
+
+
+    <!-- PRODUCTS -->
+
+    {% if products %}
+
+        <div class="row g-4">
+
+            {% for product in products %}
+
+                <div class="col-xl-3 col-lg-4 col-md-6">
+
+                    <div class="card h-100 border-0 shadow-sm">
+
+
+                        <!-- PRODUCT IMAGE -->
+
+                        <div class="position-relative">
+
+                            {% if product.images.all %}
+
+                                {% with image=product.images.all|first %}
+
+                                    {% if image.image %}
+
+                                        <img
+                                            src="{{ image.image.url }}"
+                                            class="card-img-top"
+                                            alt="{{ product.name }}"
+                                            style="
+                                                height: 230px;
+                                                object-fit: cover;
+                                            "
+                                        >
+
+                                    {% else %}
+
+                                        <div
+                                            class="d-flex align-items-center justify-content-center bg-light"
+                                            style="height: 230px;">
+
+                                            <i class="bi bi-image fs-1 text-muted"></i>
+
+                                        </div>
+
+                                    {% endif %}
+
+                                {% endwith %}
+
+                            {% else %}
+
+                                <div
+                                    class="d-flex align-items-center justify-content-center bg-light"
+                                    style="height: 230px;">
+
+                                    <i class="bi bi-image fs-1 text-muted"></i>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- FEATURED BADGE -->
+
+                            {% if product.featured %}
+
+                                <span
+                                    class="position-absolute top-0 start-0 m-3 badge bg-warning text-dark">
+
+                                    Featured
+
+                                </span>
+
+                            {% endif %}
+
+                        </div>
+
+
+                        <!-- PRODUCT DETAILS -->
+
+                        <div class="card-body d-flex flex-column">
+
+
+                            <!-- PRODUCT NAME -->
+
+                            <h5 class="fw-bold mb-2">
+
+                                {{ product.name }}
+
+                            </h5>
+
+
+                            <!-- BRAND -->
+
+                            {% if product.brand %}
+
+                                <small class="text-muted mb-2">
+
+                                    {{ product.brand }}
+
+                                </small>
+
+                            {% endif %}
+
+
+                            <!-- SHORT DESCRIPTION -->
+
+                            {% if product.short_description %}
+
+                                <p class="text-muted small mb-3">
+
+                                    {{ product.short_description }}
+
+                                </p>
+
+                            {% endif %}
+
+
+                            <!-- PRICE -->
+
+                            {% if product.sorted_variants %}
+
+                                {% with smallest_variant=product.sorted_variants.0 %}
+
+                                    <div class="mt-auto">
+
+                                        <div class="d-flex align-items-center justify-content-between">
+
+                                            <div>
+
+                                                <small class="text-muted d-block">
+                                                    Starting from
+                                                </small>
+
+                                                <h5 class="fw-bold text-success mb-0">
+
+                                                    ₹{{ smallest_variant.selling_price }}
+
+                                                </h5>
+
+                                            </div>
+
+
+                                            <!-- WEIGHT -->
+
+                                            {% if smallest_variant.weight %}
+
+                                                <span
+                                                    class="badge bg-light text-dark border">
+
+                                                    {{ smallest_variant.weight }}
+
+                                                    {% if smallest_variant.unit %}
+                                                        {{ smallest_variant.unit }}
+                                                    {% endif %}
+
+                                                </span>
+
+                                            {% endif %}
+
+                                        </div>
+
+                                    </div>
+
+                                {% endwith %}
+
+                            {% else %}
+
+                                <div class="mt-auto">
+
+                                    <small class="text-muted">
+
+                                        Price unavailable
+
+                                    </small>
+
+                                </div>
+
+                            {% endif %}
+
+
+                            <!-- VIEW PRODUCT BUTTON -->
+
+                            <a
+                                href="{% url 'products:product_detail' product.slug %}"
+                                class="btn btn-success w-100 mt-3">
+
+                                View Product
+
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+
+    {% else %}
+
+
+        <!-- NO PRODUCTS -->
+
+        <div class="text-center py-5">
+
+            <div class="mb-3">
+
+                <i class="bi bi-box-seam fs-1 text-muted"></i>
+
+            </div>
+
+            <h3 class="fw-bold">
+
+                No products available
+
+            </h3>
+
+            <p class="text-muted">
+
+                There are currently no products in
+                {{ category.name }}.
+
+            </p>
+
+            <a
+                href="{% url 'home' %}"
+                class="btn btn-success">
+
+                Back to Shop
+
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

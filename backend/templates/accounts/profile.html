@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row g-4">
+        <!-- Left Navigation Sidebar -->
+        <div class="col-md-3">
+            <div class="list-group shadow-sm">
+                <a href="{% url 'accounts:profile' %}" class="list-group-item list-group-item-action active bg-success border-success fw-bold py-3">
+                    Profile & Saved Addresses
+                </a>
+                <a href="{% url 'accounts:orders' %}" class="list-group-item list-group-item-action py-3">
+                    My Orders
+                </a>
+                <!-- Wishlist Link Added Below -->
+                <a href="{% url 'products:wishlist' %}" class="list-group-item list-group-item-action py-3">
+                    My Wishlist
+                </a>
+                <a href="{% url 'accounts:logout' %}" class="list-group-item list-group-item-action text-danger py-3">
+                    Logout
+                </a>
+            </div>
+        </div>
+
+        <!-- Right Content Section -->
+        <div class="col-md-9">
+            <!-- 1. Basic Account Information Form -->
+            <div class="card border-0 shadow-sm mb-4">
+                <div class="card-body p-4">
+                    <h4 class="fw-bold mb-4">Account Information</h4>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="row">
+                            {% for field in form %}
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">{{ field.label }}</label>
+                                {{ field }}
+                                {% if field.errors %}
+                                    <div class="text-danger small">{{ field.errors|striptags }}</div>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <button type="submit" class="btn btn-success px-4 mt-2">
+                            Update Information
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- 2. Multiple Saved Addresses Section -->
+            <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <h4 class="fw-bold mb-0">Saved Delivery Addresses</h4>
+                        <button type="button" class="btn btn-outline-success fw-semibold" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                            + Add New Address
+                        </button>
+                    </div>
+
+                    {% if addresses %}
+                    <div class="row g-3">
+                        {% for addr in addresses %}
+                        <div class="col-md-6">
+                            <div class="card h-100 border p-3 {% if addr.is_default %}border-success shadow-sm{% endif %}">
+                                <div class="d-flex justify-content-between align-items-center mb-2">
+                                    <span class="badge bg-primary px-2 py-1">{{ addr.address_title }}</span>
+                                    {% if addr.is_default %}
+                                        <span class="badge bg-success">Default</span>
+                                    {% endif %}
+                                </div>
+                                <h6 class="fw-bold mb-1">{{ addr.full_name }}</h6>
+                                <p class="text-muted small mb-1">{{ addr.address }}</p>
+                                <p class="text-muted small mb-1">{{ addr.city }} - {{ addr.pincode }}</p>
+                                <p class="text-muted small mb-3">Phone: {{ addr.phone }}</p>
+
+                                <div class="mt-auto d-flex justify-content-between align-items-center pt-2 border-top">
+                                    {% if not addr.is_default %}
+                                        <a href="{% url 'accounts:set_default_address' addr.id %}" class="btn btn-sm btn-link text-success p-0 text-decoration-none">Set as Default</a>
+                                    {% else %}
+                                        <span></span>
+                                    {% endif %}
+                                    <a href="{% url 'accounts:delete_address' addr.id %}" class="btn btn-sm btn-link text-danger p-0 text-decoration-none" onclick="return confirm('Are you sure you want to delete this address?');">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% else %}
+                    <div class="text-center py-4 text-muted">
+                        <p class="mb-2">No saved addresses found.</p>
+                        <button type="button" class="btn btn-sm btn-success" data-bs-toggle="modal" data-bs-target="#addAddressModal">
+                            Add your first address
+                        </button>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Add New Address -->
+<div class="modal fade" id="addAddressModal" tabindex="-1" aria-labelledby="addAddressModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form method="POST" action="{% url 'accounts:manage_addresses' %}">
+                {% csrf_token %}
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold" id="addAddressModalLabel">Add New Delivery Address</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Address Title (e.g., Home, Work, Office)</label>
+                        <input type="text" name="address_title" class="form-control" placeholder="Home" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Full Name</label>
+                        <input type="text" name="full_name" class="form-control" value="{{ user.first_name }} {{ user.last_name }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="text" name="phone" class="form-control" value="{{ user.phone_number|default:'' }}" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Delivery Address</label>
+                        <textarea name="address" class="form-control" rows="3" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">City</label>
+                            <input type="text" name="city" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label class="form-label">Pincode</label>
+                            <input type="text" name="pincode" class="form-control" required>
+                        </div>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="checkbox" name="is_default" id="modal_is_default">
+                        <label class="form-check-label" for="modal_is_default">
+                            Set as default address
+                        </label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-success">Save Address</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

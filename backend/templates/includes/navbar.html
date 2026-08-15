@@ -1,11 +1,10 @@
 <!-- Top Bar -->
-<div class="top-bar py-2">
-    <div class="container d-flex justify-content-between align-items-center">
+<div class="bg-success text-white py-2">
+    <div class="container d-flex justify-content-between">
         <div>
             <i class="bi bi-truck"></i>
             Free Delivery on Orders Above ₹999
         </div>
-
         <div>
             <i class="bi bi-telephone"></i>
             +91 98765 43210
@@ -14,81 +13,99 @@
 </div>
 
 <!-- Main Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm sticky-top">
-
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
     <div class="container">
 
         <!-- Logo -->
         <a class="navbar-brand fw-bold text-success fs-3" href="/">
-            FrozenFoods
+            Meame.in
         </a>
 
-        <!-- Mobile Toggle -->
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#mainNavbar">
-
+        <!-- Mobile Button -->
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#mainNavbar">
             <span class="navbar-toggler-icon"></span>
-
         </button>
 
         <div class="collapse navbar-collapse" id="mainNavbar">
 
             <!-- Search -->
-            <form class="d-flex mx-auto w-50">
-
+            <form class="d-flex mx-auto w-50" method="GET" action="#">
                 <input
                     class="form-control me-2"
                     type="search"
-                    placeholder="Search fish, chicken, beef...">
-
-                <button class="btn btn-success">
-
+                    name="q"
+                    placeholder="Search fish, chicken, beef..."
+                >
+                <button class="btn btn-success" type="submit">
                     <i class="bi bi-search"></i>
-
                 </button>
-
             </form>
 
             <!-- Menu -->
             <ul class="navbar-nav ms-auto align-items-center">
 
                 <li class="nav-item">
-                    <a class="nav-link active" href="/">Home</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Shop</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Categories</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Offers</a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Contact</a>
-                </li>
-
-                <li class="nav-item ms-3">
-                    <a class="btn btn-outline-success" href="#">
-                        <i class="bi bi-person"></i>
-                        Login
+                    <a class="nav-link active" href="/">
+                        Home
                     </a>
                 </li>
 
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Shop
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Categories
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Offers
+                    </a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="#">
+                        Contact
+                    </a>
+                </li>
+
+                <!-- User Account Dropdown / Login -->
+                <li class="nav-item ms-3">
+                    {% if user.is_authenticated %}
+                        <div class="dropdown">
+                            <button class="btn btn-outline-success dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle"></i> {{ user.username }}
+                            </button>
+                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
+                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile & Saved Address</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:orders' %}">My Orders</a></li>
+                                <li><hr class="dropdown-divider"></li>
+                                <li><a class="dropdown-item text-danger" href="{% url 'accounts:logout' %}">Logout</a></li>
+                            </ul>
+                        </div>
+                    {% else %}
+                        <a class="btn btn-outline-success" href="{% url 'accounts:login' %}">
+                            <i class="bi bi-person"></i> Login
+                        </a>
+                    {% endif %}
+                </li>
+
+                <!-- Cart -->
                 <li class="nav-item ms-2">
-                    <a class="btn btn-success position-relative" href="#">
+                    <a class="btn btn-success position-relative" href="{% url 'cart' %}">
                         <i class="bi bi-cart3"></i>
-
                         Cart
-
-                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            0
+                        <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                            {{ cart_count|default:0 }}
                         </span>
                     </a>
                 </li>
@@ -98,5 +115,4 @@
         </div>
 
     </div>
-
 </nav>

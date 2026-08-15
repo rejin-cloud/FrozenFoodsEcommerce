@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container py-5 text-center">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card p-4 shadow border-warning">
+                <span class="badge bg-warning text-dark mb-3 mx-auto px-3 py-2">MOCK PAYMENT GATEWAY</span>
+                <h3 class="fw-bold">Simulated Gateway</h3>
+                <p class="text-muted">Order ID: #{{ order.id }}</p>
+                <h2 class="text-success my-3">₹{{ order.total_amount }}</h2>
+
+                <form method="POST">
+                    {% csrf_token %}
+                    <div class="d-grid gap-2">
+                        <button type="submit" name="action" value="success" class="btn btn-success btn-lg">
+                            Simulate Success
+                        </button>
+                        <button type="submit" name="action" value="fail" class="btn btn-outline-danger">
+                            Simulate Failure
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

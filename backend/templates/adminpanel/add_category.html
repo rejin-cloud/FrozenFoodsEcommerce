@@ -1,0 +1,183 @@
+    {% extends "adminpanel/admin_base.html" %}
+
+{% block content %}
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+
+            <h1 class="fw-bold mb-1">
+                Add Category
+            </h1>
+
+            <p class="text-muted mb-0">
+                Create a new product category
+            </p>
+
+        </div>
+
+        <a
+            href="{% url 'adminpanel:categories' %}"
+            class="btn btn-outline-secondary">
+
+            <i class="bi bi-arrow-left"></i>
+            Back to Categories
+
+        </a>
+
+    </div>
+
+
+    <div class="card border-0 shadow-sm">
+
+        <div class="card-body p-4">
+
+            <form
+                method="POST"
+                enctype="multipart/form-data">
+
+                {% csrf_token %}
+
+
+                <!-- CATEGORY NAME -->
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Category Name
+                    </label>
+
+                    {{ form.name }}
+
+                    {% if form.name.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ form.name.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- SLUG -->
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Slug
+                    </label>
+
+                    {{ form.slug }}
+
+                    <small class="text-muted">
+                        Example: frozen-fish
+                    </small>
+
+                    {% if form.slug.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ form.slug.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- IMAGE -->
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Category Image
+                    </label>
+
+                    {{ form.image }}
+
+                    <small class="text-muted d-block mt-1">
+                        Upload an image for this category.
+                    </small>
+
+                    {% if form.image.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ form.image.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- DESCRIPTION -->
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-bold">
+                        Description
+                    </label>
+
+                    {{ form.description }}
+
+                    {% if form.description.errors %}
+
+                        <div class="text-danger small mt-1">
+                            {{ form.description.errors }}
+                        </div>
+
+                    {% endif %}
+
+                </div>
+
+
+                <!-- ACTIVE -->
+
+                <div class="form-check mb-4">
+
+                    {{ form.is_active }}
+
+                    <label
+                        class="form-check-label fw-bold">
+
+                        Active Category
+
+                    </label>
+
+                </div>
+
+
+                <!-- BUTTONS -->
+
+                <div class="d-flex gap-2">
+
+                    <button
+                        type="submit"
+                        class="btn btn-success">
+
+                        <i class="bi bi-check-circle"></i>
+                        Save Category
+
+                    </button>
+
+                    <a
+                        href="{% url 'adminpanel:categories' %}"
+                        class="btn btn-outline-secondary">
+
+                        Cancel
+
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

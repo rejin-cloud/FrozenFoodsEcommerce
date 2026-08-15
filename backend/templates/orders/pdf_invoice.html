@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        @page {
+            size: A4;
+            margin: 15mm;
+        }
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            color: #333;
+            font-size: 12px;
+        }
+        .header-table {
+            width: 100%;
+            border-bottom: 2px solid #198754;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+        .brand {
+            font-size: 24px;
+            font-weight: bold;
+            color: #198754;
+        }
+        .invoice-title {
+            font-size: 14px;
+            color: #666;
+            text-transform: uppercase;
+        }
+        .info-table {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+        .info-table td {
+            vertical-align: top;
+        }
+        .items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        .items-table th {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            padding: 8px;
+            text-align: left;
+            font-weight: bold;
+        }
+        .items-table td {
+            border: 1px solid #dee2e6;
+            padding: 8px;
+        }
+        .total-box {
+            margin-top: 20px;
+            text-align: right;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        .footer {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            text-align: center;
+            font-size: 10px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <table class="header-table">
+        <tr>
+            <td>
+                <div class="brand">FrozenFoods</div>
+                <div class="invoice-title">Tax Invoice / Order Receipt</div>
+            </td>
+            <td style="text-align: right;">
+                <strong>Invoice No:</strong> #INV-{{ order.id }}<br>
+                <strong>Date:</strong> {{ order.created_at|date:"d M Y" }}<br>
+                <strong>Status:</strong> {{ order.status }}
+            </td>
+        </tr>
+    </table>
+
+    <table class="info-table">
+        <tr>
+            <td width="50%">
+                <strong style="color: #198754;">Billed To:</strong><br>
+                <strong>{{ order.full_name }}</strong><br>
+                Email: {{ order.email }}<br>
+                Phone: {{ order.phone }}
+            </td>
+            <td width="50%" style="text-align: right;">
+                <strong style="color: #198754;">Delivery Address:</strong><br>
+                {{ order.address }}<br>
+                {{ order.city }} - {{ order.pincode }}
+            </td>
+        </tr>
+    </table>
+
+    <table class="items-table">
+        <thead>
+            <tr>
+                <th width="50%">Product & Variant</th>
+                <th width="15%" style="text-align: center;">Price</th>
+                <th width="15%" style="text-align: center;">Qty</th>
+                <th width="20%" style="text-align: right;">Subtotal</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in order.items.all %}
+            <tr>
+                <td>{{ item.product_name }} ({{ item.variant_name }})</td>
+                <td style="text-align: center;">₹{{ item.price }}</td>
+                <td style="text-align: center;">{{ item.quantity }}</td>
+                <td style="text-align: right;">₹{% widthratio item.price 1 item.quantity %}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <div class="total-box">
+        Grand Total: ₹{{ order.total_amount }}
+    </div>
+
+    <div class="footer">
+        Thank you for shopping with FrozenFoods! For support inquiries, reach out to support@frozenfoods.com.
+    </div>
+
+</body>
+</html>

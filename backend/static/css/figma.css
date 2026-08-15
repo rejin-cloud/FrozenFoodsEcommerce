@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap');
+
+/* Hide Scrollbars */
+* {
+  scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+  display: none;
+}
+*::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+:root {
+  --navy: #0D1B2A;
+  --navy-800: #152236;
+  --blue: #1565C0;
+  --blue-600: #1976D2;
+  --blue-400: #42A5F5;
+  --blue-50: #E3F2FD;
+  --surface: #F4F7FB;
+  --border: #E2EAF4;
+  --font-display: 'Plus Jakarta Sans', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+html {
+  font-family: var(--font-body);
+  color: var(--navy);
+  background: #ffffff;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+}
+
+/* Responsive helpers used by Navbar */
+.lg-flex { display: none; }
+.lg-hidden { display: flex; }
+.md-search { display: none; }
+.lg-filter-sidebar { display: block; }
+.mobile-menu-btn { display: flex; }
+
+@media (min-width: 900px) {
+  .lg-flex { display: flex !important; }
+  .lg-hidden { display: none !important; }
+  .md-search { display: flex !important; }
+  .mobile-menu-btn { display: none !important; }
+}
+
+@media (min-width: 640px) {
+  .md-search { display: flex !important; }
+}
+
+/* Hide filter sidebar on mobile, show as drawer instead */
+@media (max-width: 899px) {
+  .lg-filter-sidebar { display: none !important; }
+}
