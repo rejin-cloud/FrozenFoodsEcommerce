@@ -1,48 +1,55 @@
-<section class="py-5 bg-success text-white">
+<section class="freezer-cta-section">
+    <div class="container position-relative z-1">
+        <div class="row align-items-center justify-content-between g-4">
 
-    <div class="container">
-
-        <div class="row align-items-center">
-
-            <!-- TEXT -->
-
-            <div class="col-lg-8 text-center text-lg-start">
-
-                <h2 class="fw-bold mb-3">
-                    Ready to Fill Your Freezer?
+            <!-- Text Content -->
+            <div class="col-lg-7 text-center text-lg-start">
+                <span class="badge bg-white text-success px-3 py-2 rounded-pill fw-bold text-uppercase mb-3" style="font-size: 0.8rem; letter-spacing: 1px;">
+                    ❄️ Instant Freezer Stock-Up
+                </span>
+                <h2 class="cta-title">
+                    Ready to Taste the Cold-Chain Difference?
                 </h2>
-
-                <p class="mb-0 fs-5">
-                    Order premium fresh and frozen foods
-                    delivered straight to your doorstep.
+                <p class="cta-subtitle mb-4">
+                    Order today and receive our signature vacuum-sealed, sub-zero cold box delivered straight to your door with 100% freshness guarantee.
                 </p>
-
+                <div class="d-flex align-items-center justify-content-center justify-content-lg-start gap-3 flex-wrap">
+                    <a href="#featured-products" class="btn btn-cta-light d-inline-flex align-items-center gap-2">
+                        <i class="bi bi-cart3"></i>
+                        <span>Start Shopping Now</span>
+                    </a>
+                    <a href="#categories" class="btn btn-cta-outline d-inline-flex align-items-center gap-2">
+                        <i class="bi bi-grid"></i>
+                        <span>Explore All Aisles</span>
+                    </a>
+                </div>
             </div>
 
-
-            <!-- BUTTONS -->
-
-            <div class="col-lg-4 text-center text-lg-end mt-4 mt-lg-0">
-
-                <a
-                    href="{% url 'home' %}"
-                    class="btn btn-light btn-lg me-2"
-                >
-                    <i class="bi bi-cart3"></i>
-                    Shop Now
-                </a>
-
-                <a
-                    href="#"
-                    class="btn btn-outline-light btn-lg"
-                >
-                    Categories
-                </a>
-
+            <!-- Newsletter Subscription Card -->
+            <div class="col-lg-5">
+                <div class="newsletter-box text-center">
+                    <i class="bi bi-envelope-paper-heart-fill fs-1 text-white mb-2 d-inline-block"></i>
+                    <h4 class="fw-bold text-white mb-2">Join the Freezer Club</h4>
+                    <p class="text-white-50 small mb-3">
+                        Subscribe for weekly flash sales, chef recipes, and get <strong>₹150 OFF</strong> on your first order.
+                    </p>
+                    <form class="newsletter-input-group" onsubmit="event.preventDefault(); alert('Thank you for subscribing to Meame.in!');">
+                        <input
+                            type="email"
+                            class="form-control newsletter-field"
+                            placeholder="Enter your email address"
+                            required
+                        >
+                        <button type="submit" class="btn btn-primary-fresh px-4">
+                            <span>Join</span>
+                        </button>
+                    </form>
+                    <small class="text-white-50 d-block mt-3" style="font-size: 0.75rem;">
+                        🔒 No spam ever. Unsubscribe anytime with 1-click.
+                    </small>
+                </div>
             </div>
 
         </div>
-
     </div>
-
 </section>

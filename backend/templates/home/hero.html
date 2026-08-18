@@ -1,682 +1,328 @@
-<section class="hero-section">
-
+{% load static %}
+<section class="hero-modern-section">
     <div class="container">
-
-        <div class="row align-items-center g-5">
+        <div class="row align-items-start g-4 g-lg-5">
 
             <!-- LEFT CONTENT -->
-            <div class="col-lg-6">
+            <div class="col-lg-5 hero-content-col">
 
-                <div class="hero-badge mb-3">
-                    <span>●</span>
-                    Fresh • Frozen • Chilled
+                <!-- Badge -->
+                <div class="hero-pill-badge">
+                    <span class="pulse-dot"></span>
+                    <span>100% Farm-Fresh • Flash-Frozen at -18°C</span>
                 </div>
 
-                <h1 class="hero-title">
-                    Premium Quality
-                    <span>Frozen Foods</span>
+                <!-- Headline -->
+                <h1 class="hero-heading">
+                    Prime Cuts &
+                    <span class="gradient-text">Frozen Delights</span>
                     Delivered Fresh
                 </h1>
 
-                <p class="hero-description">
-                    Shop premium fish, chicken, beef, seafood and
-                    frozen products. Carefully packed and delivered
-                    straight to your doorstep.
+                <!-- Subtitle -->
+                <p class="hero-subtext">
+                    Indulge in sustainably sourced seafood, succulent poultry, tender beef, prime mutton, and ready-to-cook gourmet selections. Safely vacuum-sealed and delivered in sub-zero cold packs.
                 </p>
 
-                <!-- FEATURES -->
-                <div class="hero-features mb-4">
-
-                    <div class="hero-feature">
-
-                        <div class="feature-icon">
-                            <i class="bi bi-shield-check"></i>
-                        </div>
-
-                        <div>
-                            <strong>Premium Quality</strong>
-                            <small>Carefully selected products</small>
-                        </div>
-
+                <!-- Value Highlights -->
+                <div class="hero-highlights-grid">
+                    <div class="highlight-pill">
+                        <i class="bi bi-snow2"></i>
+                        <span>-18°C Cold-Chain</span>
                     </div>
-
-
-                    <div class="hero-feature">
-
-                        <div class="feature-icon">
-                            <i class="bi bi-snow2"></i>
-                        </div>
-
-                        <div>
-                            <strong>Fresh & Hygienic</strong>
-                            <small>Properly packed & preserved</small>
-                        </div>
-
+                    <div class="highlight-pill">
+                        <i class="bi bi-shield-check"></i>
+                        <span>Zero Preservatives</span>
                     </div>
-
-
-                    <div class="hero-feature">
-
-                        <div class="feature-icon">
-                            <i class="bi bi-truck"></i>
-                        </div>
-
-                        <div>
-                            <strong>Fast Delivery</strong>
-                            <small>Delivered to your doorstep</small>
-                        </div>
-
+                    <div class="highlight-pill">
+                        <i class="bi bi-lightning-charge"></i>
+                        <span>45-Min Fast Delivery</span>
                     </div>
-
                 </div>
 
-
-                <!-- BUTTONS -->
-                <div class="hero-buttons">
-
-                    <a
-                        href="#featured-products"
-                        class="btn btn-success btn-lg hero-shop-btn"
-                    >
-                        Shop Now
-                        <i class="bi bi-arrow-right ms-2"></i>
+                <!-- CTA Buttons -->
+                <div class="hero-cta-group">
+                    <a href="#featured-products" class="btn btn-primary-fresh hero-btn-main d-inline-flex align-items-center gap-2">
+                        <span>Explore Prime Cuts</span>
+                        <i class="bi bi-arrow-right"></i>
                     </a>
-
-
-                    <a
-                        href="#categories"
-                        class="btn btn-outline-success btn-lg hero-category-btn"
-                    >
-                        Browse Categories
+                    <a href="#categories" class="btn btn-outline-fresh hero-btn-sec d-inline-flex align-items-center gap-2">
+                        <i class="bi bi-grid"></i>
+                        <span>Browse Categories</span>
                     </a>
-
                 </div>
 
-
-                <!-- TRUST -->
-                <div class="hero-trust mt-4">
-
-                    <i class="bi bi-check-circle-fill"></i>
-
-                    Trusted quality • Hygienically packed • Fresh delivery
-
+                <!-- Social Proof / Trust -->
+                <div class="hero-social-proof">
+                    <div class="rating-stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <span><strong>4.9/5 Rating</strong> from 12,000+ satisfied food & meat lovers</span>
                 </div>
 
             </div>
 
+            <!-- RIGHT SHOWCASE MOVING CAROUSEL (6 PICS) -->
+            <div class="col-lg-7">
+                <div class="hero-visual-wrapper">
+                    <div class="hero-visual-container">
 
-            <!-- RIGHT IMAGE -->
-            <div class="col-lg-6">
+                        <!-- Ambient Glow -->
+                        <div class="hero-backdrop-glow"></div>
 
-                <div class="hero-image-wrapper">
+                        <!-- Main Moving Showcase Carousel -->
+                        <div id="heroShowcaseCarousel" class="carousel slide hero-carousel" data-bs-ride="carousel" data-bs-interval="4500" data-bs-pause="hover" data-bs-touch="true">
+                            
+                            <!-- Slide Top Header Bar -->
+                            <div class="hero-carousel-top-bar">
+                                <div class="hero-live-pill">
+                                    <span class="live-pulse-dot"></span>
+                                    <span>Gourmet Cuts Showcase</span>
+                                </div>
+                            </div>
 
-                    <div class="hero-circle"></div>
+                            <!-- Carousel Slides (6 Pictures with Custom Gourmet Copy) -->
+                            <div class="carousel-inner hero-carousel-inner">
 
+                                <!-- Slide 1: pic1.jpeg -->
+                                <div class="carousel-item active">
+                                    <div class="hero-slide-card">
+                                        <img src="{% static 'images/pic1.jpeg' %}" class="hero-showcase-img" alt="Artisan Prime Marbled Steaks & Cuts">
+                                        <div class="hero-slide-overlay">
+                                            <div class="hero-slide-content">
+                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                    <span class="hero-slide-badge">🥩 Artisan Prime Cuts</span>
+                                                    <span class="hero-slide-mini-tag">⚡ -18°C Flash Frozen</span>
+                                                </div>
+                                                <h3 class="hero-slide-title">A5 Marbled Steaks & Premium Cuts</h3>
+                                                <p class="hero-slide-desc">Hand-selected and blast-frozen within minutes of trimming to lock in delicate marbling, juiciness, and rich flavor.</p>
+                                                <div class="hero-slide-footer">
+                                                    <a href="#featured-products" class="btn-hero-slide-action">
+                                                        <span>Shop Prime Steaks</span>
+                                                        <i class="bi bi-chevron-right"></i>
+                                                    </a>
+                                                    <span class="hero-slide-highlight">Up to 25% Off First Order</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <img
-                        src="https://images.unsplash.com/photo-1607623814075-e51df1bdc82f?w=1200"
-                        class="hero-main-image"
-                        alt="Premium frozen and fresh foods"
-                    >
+                                <!-- Slide 2: pic2.jpeg -->
+                                <div class="carousel-item">
+                                    <div class="hero-slide-card">
+                                        <img src="{% static 'images/pic2.jpeg' %}" class="hero-showcase-img" alt="Farm-Fresh Country Chicken">
+                                        <div class="hero-slide-overlay">
+                                            <div class="hero-slide-content">
+                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                    <span class="hero-slide-badge">🍗 Farm-Fresh Poultry</span>
+                                                    <span class="hero-slide-mini-tag">🌿 100% Antibiotic-Free</span>
+                                                </div>
+                                                <h3 class="hero-slide-title">Tender Country Chicken & Drumsticks</h3>
+                                                <p class="hero-slide-desc">Naturally pasture-raised poultry, cut with hygienic precision and sealed in thermal packs for wholesome home cooking.</p>
+                                                <div class="hero-slide-footer">
+                                                    <a href="#featured-products" class="btn-hero-slide-action">
+                                                        <span>Shop Fresh Poultry</span>
+                                                        <i class="bi bi-chevron-right"></i>
+                                                    </a>
+                                                    <span class="hero-slide-highlight">Daily Fresh Harvest</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
+                                <!-- Slide 3: pic3.jpeg -->
+                                <div class="carousel-item">
+                                    <div class="hero-slide-card">
+                                        <img src="{% static 'images/pic3.jpeg' %}" class="hero-showcase-img" alt="Wild-Caught Ocean Seafood">
+                                        <div class="hero-slide-overlay">
+                                            <div class="hero-slide-content">
+                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                    <span class="hero-slide-badge">🦐 Ocean Catch Seafood</span>
+                                                    <span class="hero-slide-mini-tag">🌊 Wild Deep-Sea Harvest</span>
+                                                </div>
+                                                <h3 class="hero-slide-title">Norwegian Salmon & Jumbo Prawns</h3>
+                                                <p class="hero-slide-desc">Cleaned, deveined, and frozen with zero chemical glaze. Enjoy the true sweetness of natural ocean seafood.</p>
+                                                <div class="hero-slide-footer">
+                                                    <a href="#featured-products" class="btn-hero-slide-action">
+                                                        <span>Shop Fresh Seafood</span>
+                                                        <i class="bi bi-chevron-right"></i>
+                                                    </a>
+                                                    <span class="hero-slide-highlight">Zero Glaze • Pure Meat</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                    <!-- DELIVERY CARD -->
-                    <div class="hero-floating-card delivery-card">
+                                <!-- Slide 4: pic4.jpeg -->
+                                <div class="carousel-item">
+                                    <div class="hero-slide-card">
+                                        <img src="{% static 'images/pic4.jpeg' %}" class="hero-showcase-img" alt="Grass-Fed Mutton and Lamb">
+                                        <div class="hero-slide-overlay">
+                                            <div class="hero-slide-content">
+                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                    <span class="hero-slide-badge">🍖 Grass-Fed Mutton</span>
+                                                    <span class="hero-slide-mini-tag">🔪 Master Butcher Cut</span>
+                                                </div>
+                                                <h3 class="hero-slide-title">Succulent Lamb Chops & Curry Cuts</h3>
+                                                <p class="hero-slide-desc">Pasture-fed young lamb and goat, expertly proportioned for rich slow-cooked stews, gravies, and royal biryanis.</p>
+                                                <div class="hero-slide-footer">
+                                                    <a href="#featured-products" class="btn-hero-slide-action">
+                                                        <span>Shop Mutton & Lamb</span>
+                                                        <i class="bi bi-chevron-right"></i>
+                                                    </a>
+                                                    <span class="hero-slide-highlight">Melt-in-Mouth Texture</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                        <div class="floating-icon">
+                                <!-- Slide 5: pic5.jpeg -->
+                                <div class="carousel-item">
+                                    <div class="hero-slide-card">
+                                        <img src="{% static 'images/pic5.jpeg' %}" class="hero-showcase-img" alt="Gourmet Ready to Cook Appetizers">
+                                        <div class="hero-slide-overlay">
+                                            <div class="hero-slide-content">
+                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                    <span class="hero-slide-badge">🥟 Gourmet Ready-to-Cook</span>
+                                                    <span class="hero-slide-mini-tag">⏱️ 10-Min Fast Prep</span>
+                                                </div>
+                                                <h3 class="hero-slide-title">Crispy Bites, Kebabs & Appetizers</h3>
+                                                <p class="hero-slide-desc">Pre-seasoned with chef-crafted blends. Straight from your freezer to the air fryer or pan with zero mess.</p>
+                                                <div class="hero-slide-footer">
+                                                    <a href="#featured-products" class="btn-hero-slide-action">
+                                                        <span>Shop Ready-to-Cook</span>
+                                                        <i class="bi bi-chevron-right"></i>
+                                                    </a>
+                                                    <span class="hero-slide-highlight">Chef Signature Recipes</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
-                            <i class="bi bi-truck"></i>
+                                <!-- Slide 6: pic6.jpeg -->
+                                <div class="carousel-item">
+                                    <div class="hero-slide-card">
+                                        <img src="{% static 'images/pic6.jpeg' %}" class="hero-showcase-img" alt="Artisan BBQ & Marinades">
+                                        <div class="hero-slide-overlay">
+                                            <div class="hero-slide-content">
+                                                <div class="d-flex align-items-center gap-2 mb-2">
+                                                    <span class="hero-slide-badge">🔥 Artisan Marinades</span>
+                                                    <span class="hero-slide-mini-tag">🌶️ Cold-Pressed Spices</span>
+                                                </div>
+                                                <h3 class="hero-slide-title">Signature Peri-Peri & Herb Infusions</h3>
+                                                <p class="hero-slide-desc">Infused with aromatic herbs and authentic marinades for effortless grilling, pan-searing, and weekend feasts.</p>
+                                                <div class="hero-slide-footer">
+                                                    <a href="#featured-products" class="btn-hero-slide-action">
+                                                        <span>Shop Marinated Cuts</span>
+                                                        <i class="bi bi-chevron-right"></i>
+                                                    </a>
+                                                    <span class="hero-slide-highlight">Party & BBQ Specials</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <!-- Carousel Indicators -->
+                            <div class="carousel-indicators hero-carousel-indicators">
+                                <button type="button" data-bs-target="#heroShowcaseCarousel" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Prime Steaks">
+                                    <span class="indicator-bar"></span>
+                                </button>
+                                <button type="button" data-bs-target="#heroShowcaseCarousel" data-bs-slide-to="1" aria-label="Fresh Poultry">
+                                    <span class="indicator-bar"></span>
+                                </button>
+                                <button type="button" data-bs-target="#heroShowcaseCarousel" data-bs-slide-to="2" aria-label="Ocean Seafood">
+                                    <span class="indicator-bar"></span>
+                                </button>
+                                <button type="button" data-bs-target="#heroShowcaseCarousel" data-bs-slide-to="3" aria-label="Grass-Fed Mutton">
+                                    <span class="indicator-bar"></span>
+                                </button>
+                                <button type="button" data-bs-target="#heroShowcaseCarousel" data-bs-slide-to="4" aria-label="Ready to Cook">
+                                    <span class="indicator-bar"></span>
+                                </button>
+                                <button type="button" data-bs-target="#heroShowcaseCarousel" data-bs-slide-to="5" aria-label="Artisan Marinades">
+                                    <span class="indicator-bar"></span>
+                                </button>
+                            </div>
+
+                            <!-- Bottom Right Navigation Arrows -->
+                            <div class="hero-carousel-bottom-nav">
+                                <div class="hero-slide-nav-arrows">
+                                    <button class="hero-arrow-btn" type="button" data-bs-target="#heroShowcaseCarousel" data-bs-slide="prev" aria-label="Previous Slide">
+                                        <i class="bi bi-arrow-left"></i>
+                                    </button>
+                                    <button class="hero-arrow-btn" type="button" data-bs-target="#heroShowcaseCarousel" data-bs-slide="next" aria-label="Next Slide">
+                                        <i class="bi bi-arrow-right"></i>
+                                    </button>
+                                </div>
+                            </div>
 
                         </div>
 
-                        <div>
+                        <!-- Floating Card 1: Fast Delivery -->
+                        <div class="floating-glass-card card-delivery-badge">
+                            <div class="floating-icon-bubble bubble-red">
+                                <i class="bi bi-truck"></i>
+                            </div>
+                            <div>
+                                <div class="floating-card-title">Express Delivery</div>
+                                <div class="floating-card-subtitle">Insulated thermal box</div>
+                            </div>
+                        </div>
 
-                            <strong>Fast Delivery</strong>
-
-                            <small>
-                                Fresh to your door
-                            </small>
-
+                        <!-- Floating Card 2: Sub-Zero Freshness -->
+                        <div class="floating-glass-card card-cold-badge">
+                            <div class="floating-icon-bubble bubble-blue">
+                                <i class="bi bi-snow"></i>
+                            </div>
+                            <div>
+                                <div class="floating-card-title">-18°C Fresh Lock</div>
+                                <div class="floating-card-subtitle">Retains natural flavor</div>
+                            </div>
                         </div>
 
                     </div>
-
-
-                    <!-- QUALITY CARD -->
-                    <div class="hero-floating-card quality-card">
-
-                        <div class="quality-stars">
-                            ★★★★★
-                        </div>
-
-                        <strong>
-                            Premium Quality
-                        </strong>
-
-                    </div>
-
                 </div>
-
             </div>
 
         </div>
-
     </div>
-
 </section>
 
-
-<style>
-
-/* =====================================================
-   HERO SECTION
-===================================================== */
-
-.hero-section {
-    background:
-        linear-gradient(
-            135deg,
-            rgba(232, 248, 251, 0.95),
-            rgba(248, 253, 254, 0.95)
-        );
-
-    padding-top: 80px;
-    padding-bottom: 80px;
-}
-
-
-/* =====================================================
-   BADGE
-===================================================== */
-
-.hero-badge {
-
-    display: inline-flex;
-
-    align-items: center;
-
-    gap: 8px;
-
-    padding: 8px 15px;
-
-    background: #e8f7ef;
-
-    color: #198754;
-
-    border-radius: 50px;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-}
-
-
-.hero-badge span {
-
-    font-size: 10px;
-
-    color: #198754;
-
-}
-
-
-/* =====================================================
-   TITLE
-===================================================== */
-
-.hero-title {
-
-    font-size: clamp(42px, 5vw, 68px);
-
-    line-height: 1.08;
-
-    font-weight: 800;
-
-    letter-spacing: -1.5px;
-
-    color: #20252b;
-
-    margin-bottom: 25px;
-
-}
-
-
-.hero-title span {
-
-    display: block;
-
-    color: #198754;
-
-}
-
-
-/* =====================================================
-   DESCRIPTION
-===================================================== */
-
-.hero-description {
-
-    font-size: 18px;
-
-    line-height: 1.7;
-
-    color: #667085;
-
-    max-width: 600px;
-
-    margin-bottom: 30px;
-
-}
-
-
-/* =====================================================
-   FEATURES
-===================================================== */
-
-.hero-features {
-
-    display: flex;
-
-    flex-direction: column;
-
-    gap: 14px;
-
-}
-
-
-.hero-feature {
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-}
-
-
-.feature-icon {
-
-    width: 42px;
-
-    height: 42px;
-
-    border-radius: 50%;
-
-    background: #e9f8ef;
-
-    color: #198754;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 19px;
-
-}
-
-
-.hero-feature strong {
-
-    display: block;
-
-    font-size: 15px;
-
-    color: #20252b;
-
-}
-
-
-.hero-feature small {
-
-    display: block;
-
-    color: #7b8490;
-
-    margin-top: 2px;
-
-}
-
-
-/* =====================================================
-   BUTTONS
-===================================================== */
-
-.hero-buttons {
-
-    display: flex;
-
-    gap: 12px;
-
-    flex-wrap: wrap;
-
-}
-
-
-.hero-shop-btn {
-
-    padding: 12px 25px;
-
-    border-radius: 8px;
-
-    font-weight: 600;
-
-    border: none;
-
-}
-
-
-.hero-category-btn {
-
-    padding: 12px 25px;
-
-    border-radius: 8px;
-
-    font-weight: 600;
-
-}
-
-
-/* =====================================================
-   TRUST
-===================================================== */
-
-.hero-trust {
-
-    font-size: 13px;
-
-    color: #68727e;
-
-}
-
-
-.hero-trust i {
-
-    color: #198754;
-
-    margin-right: 5px;
-
-}
-
-
-/* =====================================================
-   IMAGE AREA
-===================================================== */
-
-.hero-image-wrapper {
-
-    position: relative;
-
-    padding: 20px;
-
-}
-
-
-.hero-circle {
-
-    position: absolute;
-
-    width: 430px;
-
-    height: 430px;
-
-    border-radius: 50%;
-
-    background: #dff4e7;
-
-    top: 50%;
-
-    left: 50%;
-
-    transform: translate(-50%, -50%);
-
-    z-index: 0;
-
-}
-
-
-/* =====================================================
-   MAIN IMAGE
-===================================================== */
-
-.hero-main-image {
-
-    position: relative;
-
-    z-index: 2;
-
-    width: 100%;
-
-    height: 500px;
-
-    object-fit: cover;
-
-    border-radius: 25px;
-
-    box-shadow:
-        0 25px 60px rgba(0, 0, 0, 0.15);
-
-}
-
-
-/* =====================================================
-   FLOATING CARDS
-===================================================== */
-
-.hero-floating-card {
-
-    position: absolute;
-
-    z-index: 5;
-
-    background: #ffffff;
-
-    border-radius: 14px;
-
-    box-shadow:
-        0 15px 40px rgba(0, 0, 0, 0.12);
-
-}
-
-
-/* =====================================================
-   DELIVERY CARD
-===================================================== */
-
-.delivery-card {
-
-    left: -5px;
-
-    bottom: 55px;
-
-    padding: 13px 18px;
-
-    display: flex;
-
-    align-items: center;
-
-    gap: 12px;
-
-}
-
-
-.floating-icon {
-
-    width: 42px;
-
-    height: 42px;
-
-    border-radius: 50%;
-
-    background: #e8f7ef;
-
-    color: #198754;
-
-    display: flex;
-
-    align-items: center;
-
-    justify-content: center;
-
-    font-size: 18px;
-
-}
-
-
-.delivery-card strong {
-
-    display: block;
-
-    font-size: 14px;
-
-}
-
-
-.delivery-card small {
-
-    display: block;
-
-    color: #7b8490;
-
-    font-size: 12px;
-
-}
-
-
-/* =====================================================
-   QUALITY CARD
-===================================================== */
-
-.quality-card {
-
-    right: -5px;
-
-    top: 55px;
-
-    padding: 14px 18px;
-
-}
-
-
-.quality-stars {
-
-    color: #f5b301;
-
-    font-size: 14px;
-
-    letter-spacing: 2px;
-
-    margin-bottom: 3px;
-
-}
-
-
-.quality-card strong {
-
-    font-size: 13px;
-
-}
-
-
-/* =====================================================
-   RESPONSIVE
-===================================================== */
-
-@media (max-width: 991px) {
-
-    .hero-section {
-
-        padding: 60px 0;
-
+<script>
+(function() {
+    function initHeroIndicators() {
+        const carouselEl = document.getElementById("heroShowcaseCarousel");
+        if (!carouselEl) return;
+        const indicators = carouselEl.querySelectorAll(".hero-carousel-indicators button");
+        
+        carouselEl.addEventListener("slide.bs.carousel", function(e) {
+            indicators.forEach((btn, i) => {
+                if (i === e.to) {
+                    btn.classList.add("active");
+                    btn.setAttribute("aria-current", "true");
+                } else {
+                    btn.classList.remove("active");
+                    btn.removeAttribute("aria-current");
+                }
+            });
+        });
     }
-
-
-    .hero-image-wrapper {
-
-        margin-top: 30px;
-
+    if (document.readyState === "loading") {
+        document.addEventListener("DOMContentLoaded", initHeroIndicators);
+    } else {
+        initHeroIndicators();
     }
-
-
-    .hero-circle {
-
-        width: 350px;
-
-        height: 350px;
-
-    }
-
-
-    .hero-main-image {
-
-        height: 400px;
-
-    }
-
-}
-
-
-@media (max-width: 575px) {
-
-    .hero-section {
-
-        padding: 45px 0 60px;
-
-    }
-
-
-    .hero-title {
-
-        font-size: 40px;
-
-    }
-
-
-    .hero-description {
-
-        font-size: 16px;
-
-    }
-
-
-    .hero-main-image {
-
-        height: 320px;
-
-        border-radius: 18px;
-
-    }
-
-
-    .hero-circle {
-
-        width: 280px;
-
-        height: 280px;
-
-    }
-
-
-    .delivery-card {
-
-        left: -5px;
-
-        bottom: 25px;
-
-    }
-
-
-    .quality-card {
-
-        right: -5px;
-
-        top: 25px;
-
-    }
-
-}
-
-</style>
+})();
+</script>

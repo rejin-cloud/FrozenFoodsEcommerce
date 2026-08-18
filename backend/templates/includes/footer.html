@@ -1,254 +1,111 @@
-<footer class="bg-dark text-light pt-5">
-
+<footer class="footer-modern">
     <div class="container">
+        <div class="row g-4 mb-5">
 
-        <div class="row g-4">
-
-            <!-- BRAND -->
-
+            <!-- Brand Column -->
             <div class="col-lg-4 col-md-6">
-
-                <h4 class="fw-bold mb-3">
-                    Frozen Foods
-                </h4>
-
-                <p class="text-secondary">
-                    Premium quality fresh and frozen foods,
-                    carefully packed and delivered to your doorstep.
+                <div class="footer-brand-title">
+                    <div class="brand-icon-box" style="width: 32px; height: 32px; font-size: 1rem;">
+                        <i class="bi bi-snow"></i>
+                    </div>
+                    <span>Meame<span class="text-danger">.in</span></span>
+                </div>
+                <p class="text-secondary pe-lg-4 mb-4" style="line-height: 1.7; font-size: 0.92rem;">
+                    Your premier destination for prime cuts, farm-fresh poultry, ocean catch seafood, and gourmet frozen foods. Flash-frozen at -18°C to seal in peak juiciness, rich flavor, and essential nutrients.
                 </p>
-
-                <div class="d-flex gap-2 mt-4">
-
-                    <a
-                        href="#"
-                        class="btn btn-outline-light rounded-circle"
-                        style="width:40px;height:40px;"
-                    >
+                <div class="d-flex gap-2">
+                    <a href="#" class="footer-social-btn" aria-label="Facebook">
                         <i class="bi bi-facebook"></i>
                     </a>
-
-                    <a
-                        href="#"
-                        class="btn btn-outline-light rounded-circle"
-                        style="width:40px;height:40px;"
-                    >
+                    <a href="#" class="footer-social-btn" aria-label="Instagram">
                         <i class="bi bi-instagram"></i>
                     </a>
-
-                    <a
-                        href="#"
-                        class="btn btn-outline-light rounded-circle"
-                        style="width:40px;height:40px;"
-                    >
+                    <a href="#" class="footer-social-btn" aria-label="WhatsApp">
                         <i class="bi bi-whatsapp"></i>
                     </a>
-
+                    <a href="#" class="footer-social-btn" aria-label="YouTube">
+                        <i class="bi bi-youtube"></i>
+                    </a>
                 </div>
-
             </div>
 
-
-            <!-- QUICK LINKS -->
-
-            <div class="col-lg-2 col-md-6">
-
-                <h6 class="fw-bold mb-3">
-                    Quick Links
-                </h6>
-
-                <ul class="list-unstyled">
-
-                    <li class="mb-2">
-                        <a
-                            href="{% url 'home' %}"
-                            class="text-secondary text-decoration-none"
-                        >
-                            Home
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="#"
-                            class="text-secondary text-decoration-none"
-                        >
-                            Shop
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="#"
-                            class="text-secondary text-decoration-none"
-                        >
-                            Categories
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="#"
-                            class="text-secondary text-decoration-none"
-                        >
-                            About Us
-                        </a>
-                    </li>
-
+            <!-- Quick Navigation Links -->
+            <div class="col-lg-2 col-md-6 col-6">
+                <h6 class="footer-col-title">Shop Fresh</h6>
+                <ul class="footer-links-list">
+                    <li><a href="/">Home</a></li>
+                    <li><a href="#categories">Browse Aisles</a></li>
+                    <li><a href="#featured-products">Prime Selections</a></li>
+                    <li><a href="#special-offers">Flash Deals</a></li>
+                    <li><a href="#popular-products">Best Sellers</a></li>
                 </ul>
-
             </div>
 
-
-            <!-- CUSTOMER SERVICE -->
-
-            <div class="col-lg-3 col-md-6">
-
-                <h6 class="fw-bold mb-3">
-                    Customer Service
-                </h6>
-
-                <ul class="list-unstyled">
-
-                    <li class="mb-2">
-                        <a
-                            href="#"
-                            class="text-secondary text-decoration-none"
-                        >
-                            My Account
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="#"
-                            class="text-secondary text-decoration-none"
-                        >
-                            My Orders
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="#"
-                            class="text-secondary text-decoration-none"
-                        >
-                            Wishlist
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="#"
-                            class="text-secondary text-decoration-none"
-                        >
-                            Contact Us
-                        </a>
-                    </li>
-
-                    <li class="mb-2">
-                        <a
-                            href="#"
-                            class="text-secondary text-decoration-none"
-                        >
-                            Delivery Information
-                        </a>
-                    </li>
-
+            <!-- Customer Service Links -->
+            <div class="col-lg-3 col-md-6 col-6">
+                <h6 class="footer-col-title">Customer Care</h6>
+                <ul class="footer-links-list">
+                    <li><a href="{% url 'accounts:profile' %}">My Account</a></li>
+                    <li><a href="{% url 'accounts:orders' %}">Track Orders</a></li>
+                    <li><a href="{% url 'products:wishlist' %}">Saved Wishlist</a></li>
+                    <li><a href="{% url 'cart' %}">Shopping Cart</a></li>
+                    <li><a href="#why-choose-us">Cold-Chain Guarantee</a></li>
                 </ul>
-
             </div>
 
-
-            <!-- CONTACT -->
-
+            <!-- Contact & Hours -->
             <div class="col-lg-3 col-md-6">
-
-                <h6 class="fw-bold mb-3">
-                    Contact Us
-                </h6>
-
-                <div class="text-secondary">
-
-                    <p class="mb-3">
-
-                        <i class="bi bi-geo-alt text-success me-2"></i>
-
-                        Kerala, India
-
-                    </p>
-
-                    <p class="mb-3">
-
-                        <i class="bi bi-telephone text-success me-2"></i>
-
-                        +91 XXXXX XXXXX
-
-                    </p>
-
-                    <p class="mb-3">
-
-                        <i class="bi bi-envelope text-success me-2"></i>
-
-                        support@example.com
-
-                    </p>
-
-                    <p class="mb-0">
-
-                        <i class="bi bi-clock text-success me-2"></i>
-
-                        Mon - Sun: 9:00 AM - 9:00 PM
-
-                    </p>
-
+                <h6 class="footer-col-title">Contact & Help</h6>
+                <div>
+                    <div class="footer-contact-item">
+                        <i class="bi bi-geo-alt-fill text-danger"></i>
+                        <span>Express Cold-Chain Hub, Kerala, India</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="bi bi-telephone-fill text-danger"></i>
+                        <span>+91 98765 43210</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="bi bi-envelope-fill text-danger"></i>
+                        <span>support@meame.in</span>
+                    </div>
+                    <div class="footer-contact-item">
+                        <i class="bi bi-clock-fill text-danger"></i>
+                        <span>Mon - Sun: 7:00 AM - 10:00 PM</span>
+                    </div>
                 </div>
-
             </div>
 
         </div>
 
-
-        <!-- DIVIDER -->
-
-        <hr class="border-secondary my-4">
-
-
-        <!-- BOTTOM -->
-
-        <div class="row align-items-center pb-4">
-
-            <div class="col-md-6">
-
-                <p class="text-secondary mb-0">
-
-                    © {% now "Y" %} Frozen Foods.
-                    All rights reserved.
-
-                </p>
-
+        <!-- Trust Badges & Accepted Payments -->
+        <div class="py-3 border-top border-secondary border-opacity-25 d-flex flex-wrap align-items-center justify-content-between gap-3">
+            <div class="d-flex align-items-center gap-3 text-secondary" style="font-size: 0.85rem;">
+                <span><i class="bi bi-shield-check text-danger me-1"></i> 100% Secure Checkout</span>
+                <span>•</span>
+                <span><i class="bi bi-snow2 text-info me-1"></i> -18°C Insulated Pack</span>
+                <span class="d-none d-sm-inline">•</span>
+                <span class="d-none d-sm-inline"><i class="bi bi-arrow-repeat text-warning me-1"></i> Fresh-or-Refund Policy</span>
             </div>
-
-
-            <div class="col-md-6 text-md-end mt-3 mt-md-0">
-
-                <a
-                    href="#"
-                    class="text-secondary text-decoration-none me-3"
-                >
-                    Privacy Policy
-                </a>
-
-                <a
-                    href="#"
-                    class="text-secondary text-decoration-none"
-                >
-                    Terms & Conditions
-                </a>
-
+            <div class="d-flex align-items-center gap-2 text-secondary" style="font-size: 0.82rem;">
+                <span class="badge bg-secondary bg-opacity-25 text-light px-2 py-1">UPI</span>
+                <span class="badge bg-secondary bg-opacity-25 text-light px-2 py-1">Cards</span>
+                <span class="badge bg-secondary bg-opacity-25 text-light px-2 py-1">NetBanking</span>
+                <span class="badge bg-secondary bg-opacity-25 text-light px-2 py-1">COD Available</span>
             </div>
+        </div>
 
+        <!-- Bottom Copyright Bar -->
+        <div class="footer-bottom-bar d-flex flex-wrap justify-content-between align-items-center">
+            <p class="mb-0">
+                © {% now "Y" %} <strong>Meame.in</strong>. All rights reserved. Premium Fresh Meats & Frozen Foods.
+            </p>
+            <div class="d-flex gap-3 mt-2 mt-md-0">
+                <a href="#" class="text-secondary text-decoration-none">Privacy Policy</a>
+                <a href="#" class="text-secondary text-decoration-none">Terms of Service</a>
+                <a href="#" class="text-secondary text-decoration-none">Refund Policy</a>
+            </div>
         </div>
 
     </div>
-
 </footer>

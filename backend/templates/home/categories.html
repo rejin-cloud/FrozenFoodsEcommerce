@@ -1,387 +1,56 @@
-<section id="categories" class="category-section py-5">
-
+<section id="categories" class="categories-section">
     <div class="container">
 
-        <!-- SECTION HEADER -->
-
-        <div class="section-heading text-center mb-5">
-
-            <span class="section-label">
-                SHOP FRESH
+        <!-- Section Header -->
+        <div class="text-center section-header-wrap">
+            <span class="section-tag">
+                <i class="bi bi-grid-fill"></i>
+                Browse Categories
             </span>
-
-            <h2 class="fw-bold mt-2">
-                Shop by Category
+            <h2 class="section-title">
+                Explore Our Fresh Aisles
             </h2>
-
-            <p class="text-muted">
-                Explore our selection of premium fresh and frozen foods.
+            <p class="section-subtitle">
+                Hand-selected frozen meats, farm-fresh poultry, ocean catch, and ready-to-cook delicacies.
             </p>
-
         </div>
 
-
-        <!-- CATEGORIES -->
-
-        <div class="row g-4">
-
+        <!-- Categories Grid -->
+        <div class="row g-4 justify-content-center">
             {% for category in categories %}
-
             <div class="col-xl-3 col-lg-3 col-md-4 col-6">
-
-                <a
-                    href="{% url 'products:category_products' category.slug %}"
-                    class="category-link"
-                >
-
-                    <div class="category-card">
-
-                        <!-- IMAGE -->
-
-                        <div class="category-image-wrapper">
-
-                            {% if category.image %}
-
-                            <img
-                                src="{{ category.image.url }}"
-                                class="category-image"
-                                alt="{{ category.name }}"
-                            >
-
-                            {% endif %}
-
-                            <div class="category-overlay">
-
-                                <span>
-                                    View Products
-                                    <i class="bi bi-arrow-right"></i>
-                                </span>
-
+                <a href="{% url 'products:category_products' category.slug %}" class="category-card-modern">
+                    <div class="category-img-box">
+                        {% if category.image %}
+                            <img src="{{ category.image.url }}" class="category-thumbnail" alt="{{ category.name }}">
+                        {% else %}
+                            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
+                                <i class="bi bi-image fs-1"></i>
                             </div>
-
+                        {% endif %}
+                        <div class="category-overlay-pill">
+                            <span>View All</span>
+                            <i class="bi bi-arrow-right ms-1"></i>
                         </div>
-
-
-                        <!-- CONTENT -->
-
-                        <div class="category-content">
-
-                            <h5>
-                                {{ category.name }}
-                            </h5>
-
-                            <span>
-                                Explore Collection
-                                <i class="bi bi-arrow-right"></i>
-                            </span>
-
-                        </div>
-
                     </div>
-
+                    <div class="category-card-body">
+                        <h5 class="category-name-title">{{ category.name }}</h5>
+                        <span class="category-cta-link">
+                            Explore Collection <i class="bi bi-arrow-right"></i>
+                        </span>
+                    </div>
                 </a>
-
             </div>
-
-
             {% empty %}
-
-            <div class="col-12">
-
-                <div class="text-center py-5">
-
-                    <i class="bi bi-grid fs-1 text-muted"></i>
-
-                    <h5 class="mt-3">
-                        No Categories Found
-                    </h5>
-
-                    <p class="text-muted">
-                        Categories will appear here once they are added.
-                    </p>
-
+            <div class="col-12 text-center py-5">
+                <div class="p-4 bg-white rounded-4 shadow-sm d-inline-block">
+                    <i class="bi bi-grid-3x3-gap text-muted fs-1 mb-2 d-block"></i>
+                    <h5 class="fw-bold">No Categories Found</h5>
+                    <p class="text-muted mb-0">Categories will appear here once added in the management portal.</p>
                 </div>
-
             </div>
-
             {% endfor %}
-
         </div>
 
     </div>
-
 </section>
-
-
-<style>
-
-/* =====================================================
-   CATEGORY SECTION
-===================================================== */
-
-.category-section {
-
-    background: #d5f4f0;
-
-}
-
-
-/* =====================================================
-   SECTION HEADING
-===================================================== */
-
-.section-label {
-
-    display: inline-block;
-
-    color: #198754;
-
-    font-size: 13px;
-
-    font-weight: 700;
-
-    letter-spacing: 1.5px;
-
-}
-
-
-.section-heading h2 {
-
-    font-size: 36px;
-
-    color: #20252b;
-
-}
-
-
-.section-heading p {
-
-    font-size: 16px;
-
-}
-
-
-/* =====================================================
-   CATEGORY LINK
-===================================================== */
-
-.category-link {
-
-    text-decoration: none;
-
-    color: inherit;
-
-}
-
-
-/* =====================================================
-   CATEGORY CARD
-===================================================== */
-
-.category-card {
-
-    background: #ffffff;
-
-    border-radius: 18px;
-
-    overflow: hidden;
-
-    box-shadow:
-        0 5px 20px rgba(0, 0, 0, 0.06);
-
-    transition:
-        transform 0.3s ease,
-        box-shadow 0.3s ease;
-
-}
-
-
-.category-card:hover {
-
-    transform: translateY(-7px);
-
-    box-shadow:
-        0 15px 35px rgba(0, 0, 0, 0.12);
-
-}
-
-
-/* =====================================================
-   IMAGE
-===================================================== */
-
-.category-image-wrapper {
-
-    position: relative;
-
-    overflow: hidden;
-
-}
-
-
-.category-image {
-
-    width: 100%;
-
-    height: 210px;
-
-    object-fit: cover;
-
-    display: block;
-
-    transition:
-        transform 0.5s ease;
-
-}
-
-
-.category-card:hover .category-image {
-
-    transform: scale(1.08);
-
-}
-
-
-/* =====================================================
-   OVERLAY
-===================================================== */
-
-.category-overlay {
-
-    position: absolute;
-
-    inset: 0;
-
-    background:
-        linear-gradient(
-            to top,
-            rgba(0, 0, 0, 0.65),
-            transparent
-        );
-
-    display: flex;
-
-    align-items: flex-end;
-
-    padding: 18px;
-
-    opacity: 0;
-
-    transition:
-        opacity 0.3s ease;
-
-}
-
-
-.category-card:hover .category-overlay {
-
-    opacity: 1;
-
-}
-
-
-.category-overlay span {
-
-    color: #ffffff;
-
-    font-size: 14px;
-
-    font-weight: 600;
-
-}
-
-
-.category-overlay i {
-
-    margin-left: 5px;
-
-}
-
-
-/* =====================================================
-   CONTENT
-===================================================== */
-
-.category-content {
-
-    padding: 18px;
-
-    text-align: center;
-
-}
-
-
-.category-content h5 {
-
-    font-size: 20px;
-
-    font-weight: 700;
-
-    margin-bottom: 8px;
-
-    color: #20252b;
-
-}
-
-
-.category-content span {
-
-    color: #198754;
-
-    font-size: 13px;
-
-    font-weight: 600;
-
-}
-
-
-.category-content i {
-
-    margin-left: 4px;
-
-}
-
-
-/* =====================================================
-   MOBILE
-===================================================== */
-
-@media (max-width: 575px) {
-
-    .section-heading h2 {
-
-        font-size: 30px;
-
-    }
-
-
-    .category-image {
-
-        height: 150px;
-
-    }
-
-
-    .category-content {
-
-        padding: 14px 8px;
-
-    }
-
-
-    .category-content h5 {
-
-        font-size: 17px;
-
-    }
-
-
-    .category-content span {
-
-        font-size: 11px;
-
-    }
-
-}
-
-</style>

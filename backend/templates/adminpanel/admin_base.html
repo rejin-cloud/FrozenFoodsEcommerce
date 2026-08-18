@@ -17,6 +17,11 @@
         {% endblock %}
     </title>
 
+    <!-- Favicon & Brand Icons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon.png' %}">
+    <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+
 
     <!-- Bootstrap -->
 
@@ -210,9 +215,10 @@
 
         <a
             href="{% url 'adminpanel:dashboard' %}"
-            class="admin-logo">
+            class="admin-logo d-flex align-items-center"
+            aria-label="Admin Dashboard">
 
-            Meami<span>.in</span>
+            <img src="{% static 'images/logo.png' %}" alt="Meame Admin" style="max-height: 32px; width: auto; display: block;">
 
         </a>
 

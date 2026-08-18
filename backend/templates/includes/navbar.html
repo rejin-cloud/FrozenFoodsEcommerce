@@ -1,118 +1,315 @@
-<!-- Top Bar -->
-<div class="bg-success text-white py-2">
-    <div class="container d-flex justify-content-between">
-        <div>
-            <i class="bi bi-truck"></i>
-            Free Delivery on Orders Above ₹999
+{% load static %}
+<!-- Top Announcement Bar -->
+<div class="top-bar-modern">
+    <div class="container d-flex justify-content-between align-items-center flex-wrap gap-2">
+        <div class="d-flex align-items-center gap-3">
+            <span class="trust-item">
+                <i class="bi bi-snow2"></i>
+                <span>Sub-Zero Cold Chain Delivery</span>
+            </span>
+            <span class="d-none d-md-inline text-white-50">•</span>
+            <span class="trust-item d-none d-md-inline-flex">
+                <i class="bi bi-truck"></i>
+                <span>Free Delivery on Orders Above ₹999</span>
+            </span>
         </div>
-        <div>
-            <i class="bi bi-telephone"></i>
-            +91 98765 43210
+        <div class="d-flex align-items-center gap-3">
+            <span class="badge-pill-cold d-none d-sm-inline-block">
+                ⚡ 100% Freshness Guarantee
+            </span>
+            <a href="tel:+919876543210" class="text-white text-decoration-none d-flex align-items-center gap-1">
+                <i class="bi bi-telephone"></i>
+                <span>+91 98765 43210</span>
+            </a>
         </div>
     </div>
 </div>
 
-<!-- Main Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
-    <div class="container">
+<!-- Main Sticky Header -->
+<header class="header-main-wrapper sticky-top">
+    
+    <!-- Primary Header (Logo, Search, User Actions) -->
+    <div class="navbar-primary-bar">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between gap-3 py-2">
 
-        <!-- Logo -->
-        <a class="navbar-brand fw-bold text-success fs-3" href="/">
-            Meame.in
-        </a>
+                <!-- 1. Left: Brand Logo -->
+                <a class="navbar-brand navbar-brand-logo me-0 d-flex align-items-center" href="/" aria-label="Home Dashboard">
+                    <img src="{% static 'images/logo.png' %}" alt="Meame.in" class="navbar-brand-img">
+                </a>
 
-        <!-- Mobile Button -->
-        <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#mainNavbar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+                <!-- 2. Center: Prominent Search Bar (Desktop & Tablet) -->
+                <div class="header-search-container d-none d-lg-block flex-grow-1 mx-4">
+                    <form class="navbar-search-form" method="GET" action="#featured-products">
+                        <div class="search-input-group">
+                            <i class="bi bi-search search-icon-left"></i>
+                            <input
+                                class="form-control search-field-main"
+                                type="search"
+                                name="q"
+                                placeholder="Search fresh fish, chicken, beef, seafood, steaks..."
+                                aria-label="Search products"
+                            >
+                            <button class="btn btn-search-submit" type="submit" aria-label="Submit search">
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
 
-        <div class="collapse navbar-collapse" id="mainNavbar">
+                <!-- 3. Right: Action Buttons Hub -->
+                <div class="d-flex align-items-center gap-2">
 
-            <!-- Search -->
-            <form class="d-flex mx-auto w-50" method="GET" action="#">
-                <input
-                    class="form-control me-2"
-                    type="search"
-                    name="q"
-                    placeholder="Search fish, chicken, beef..."
-                >
-                <button class="btn btn-success" type="submit">
-                    <i class="bi bi-search"></i>
-                </button>
-            </form>
-
-            <!-- Menu -->
-            <ul class="navbar-nav ms-auto align-items-center">
-
-                <li class="nav-item">
-                    <a class="nav-link active" href="/">
-                        Home
+                    <!-- Wishlist Button -->
+                    <a href="{% url 'products:wishlist' %}" class="btn-header-action d-none d-sm-inline-flex" title="Saved Wishlist">
+                        <i class="bi bi-heart fs-5"></i>
+                        <span class="d-none d-xl-inline">Wishlist</span>
                     </a>
-                </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Shop
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Categories
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Offers
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Contact
-                    </a>
-                </li>
-
-                <!-- User Account Dropdown / Login -->
-                <li class="nav-item ms-3">
+                    <!-- User Account / Login Dropdown -->
                     {% if user.is_authenticated %}
                         <div class="dropdown">
-                            <button class="btn btn-outline-success dropdown-toggle" type="button" id="userDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                                <i class="bi bi-person-circle"></i> {{ user.username }}
+                            <button class="btn-header-action dropdown-toggle" type="button" id="userMenuDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="bi bi-person-circle fs-5 text-danger"></i>
+                                <span class="d-none d-md-inline">{{ user.username|truncatechars:10 }}</span>
                             </button>
-                            <ul class="dropdown-menu dropdown-menu-end shadow" aria-labelledby="userDropdown">
-                                <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile & Saved Address</a></li>
-                                <li><a class="dropdown-item" href="{% url 'accounts:orders' %}">My Orders</a></li>
+                            <ul class="dropdown-menu dropdown-menu-end shadow-lg border-0 mt-2" aria-labelledby="userMenuDropdown">
+                                <li>
+                                    <div class="px-3 py-2 border-bottom">
+                                        <small class="text-muted d-block">Signed in as</small>
+                                        <strong class="text-dark">{{ user.username }}</strong>
+                                    </div>
+                                </li>
+                                <li><a class="dropdown-item mt-1" href="{% url 'accounts:profile' %}"><i class="bi bi-person me-2 text-muted"></i> Profile & Address</a></li>
+                                <li><a class="dropdown-item" href="{% url 'accounts:orders' %}"><i class="bi bi-bag-check me-2 text-muted"></i> My Orders</a></li>
+                                <li><a class="dropdown-item" href="{% url 'products:wishlist' %}"><i class="bi bi-heart me-2 text-muted"></i> Saved Wishlist</a></li>
                                 <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item text-danger" href="{% url 'accounts:logout' %}">Logout</a></li>
+                                <li><a class="dropdown-item text-danger" href="{% url 'accounts:logout' %}"><i class="bi bi-box-arrow-right me-2"></i> Logout</a></li>
                             </ul>
                         </div>
                     {% else %}
-                        <a class="btn btn-outline-success" href="{% url 'accounts:login' %}">
-                            <i class="bi bi-person"></i> Login
+                        <a href="{% url 'accounts:login' %}" class="btn-header-action btn-header-signin">
+                            <i class="bi bi-person fs-5"></i>
+                            <span>Sign In</span>
                         </a>
                     {% endif %}
-                </li>
 
-                <!-- Cart -->
-                <li class="nav-item ms-2">
-                    <a class="btn btn-success position-relative" href="{% url 'cart' %}">
-                        <i class="bi bi-cart3"></i>
-                        Cart
-                        <span id="cart-count" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-                            {{ cart_count|default:0 }}
-                        </span>
+                    <!-- Cart CTA Button -->
+                    <a href="{% url 'cart' %}" class="btn-header-cart" title="Shopping Cart">
+                        <i class="bi bi-bag fs-5"></i>
+                        <span class="d-none d-sm-inline fw-bold">Cart</span>
+                        <span id="cart-count" class="cart-badge-counter">{{ cart_count|default:0 }}</span>
+                    </a>
+
+                    <!-- Mobile Menu Hamburger Toggler -->
+                    <button
+                        class="btn-mobile-toggler d-lg-none"
+                        type="button"
+                        data-bs-toggle="offcanvas"
+                        data-bs-target="#mobileNavDrawer"
+                        aria-controls="mobileNavDrawer"
+                        aria-label="Toggle navigation drawer"
+                    >
+                        <i class="bi bi-list fs-2"></i>
+                    </button>
+
+                </div>
+
+            </div>
+
+            <!-- Mobile Search Bar (Visible on Mobile only) -->
+            <div class="d-lg-none pb-2 pt-1">
+                <form class="navbar-search-form" method="GET" action="#featured-products">
+                    <div class="search-input-group">
+                        <i class="bi bi-search search-icon-left"></i>
+                        <input
+                            class="form-control search-field-main py-2"
+                            type="search"
+                            name="q"
+                            placeholder="Search fresh fish, chicken, meats..."
+                            aria-label="Search"
+                        >
+                        <button class="btn btn-search-submit" type="submit" aria-label="Submit search">
+                            <i class="bi bi-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Secondary Categories Navigation Strip (Desktop) -->
+    <div class="navbar-secondary-strip d-none d-lg-block">
+        <div class="container">
+            <div class="d-flex align-items-center justify-content-between">
+                
+                <!-- Category & Page Links -->
+                <ul class="nav sub-nav-links align-items-center gap-1">
+                    <li class="nav-item">
+                        <a class="nav-link sub-nav-link active" href="/">
+                            <i class="bi bi-house-door me-1"></i> Home
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sub-nav-link" href="#categories">
+                            <i class="bi bi-grid me-1"></i> All Categories
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sub-nav-link" href="#featured-products">
+                            <i class="bi bi-award me-1"></i> Prime Selections
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sub-nav-link" href="#special-offers">
+                            <span class="text-danger fw-bold"><i class="bi bi-fire me-1"></i> Flash Deals</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sub-nav-link" href="#popular-products">
+                            <i class="bi bi-trophy me-1"></i> Best Sellers
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sub-nav-link" href="#why-choose-us">
+                            <i class="bi bi-shield-check me-1"></i> Why Choose Us
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link sub-nav-link" href="#how-it-works">
+                            <i class="bi bi-clock-history me-1"></i> How It Works
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Right Pill: Express Delivery Indicator -->
+                <div class="sub-nav-delivery-badge d-flex align-items-center gap-2">
+                    <span class="delivery-pulse-dot"></span>
+                    <span><strong>⚡ 45-Min</strong> Express Cold Delivery</span>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</header>
+
+<!-- Mobile Offcanvas Navigation Drawer -->
+<div class="offcanvas offcanvas-start mobile-nav-drawer" tabindex="-1" id="mobileNavDrawer" aria-labelledby="mobileNavDrawerLabel">
+    <div class="offcanvas-header border-bottom">
+        <a class="navbar-brand navbar-brand-logo d-flex align-items-center" href="/" id="mobileNavDrawerLabel" aria-label="Home Dashboard">
+            <img src="{% static 'images/logo.png' %}" alt="Meame.in" class="navbar-brand-img mobile-brand-img">
+        </a>
+        <button type="button" class="btn-close text-reset shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body p-0">
+
+        <!-- User Quick Status / Action -->
+        <div class="p-3 bg-light border-bottom">
+            {% if user.is_authenticated %}
+                <div class="d-flex align-items-center gap-3">
+                    <div class="avatar-initial-circle avatar-grad-1" style="width:42px; height:42px; font-size:1rem;">
+                        {{ user.username|slice:":1"|upper }}
+                    </div>
+                    <div>
+                        <div class="fw-bold text-dark">{{ user.username }}</div>
+                        <small class="text-muted">{{ user.email|default:"Customer Account" }}</small>
+                    </div>
+                </div>
+            {% else %}
+                <div class="d-flex gap-2">
+                    <a href="{% url 'accounts:login' %}" class="btn btn-primary-fresh btn-sm w-100">
+                        <i class="bi bi-person me-1"></i> Sign In / Register
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+
+        <!-- Navigation Links List -->
+        <div class="p-3">
+            <h6 class="text-uppercase text-muted fw-bold small mb-2" style="letter-spacing: 1px;">Navigation</h6>
+            <ul class="list-unstyled mobile-nav-list mb-4">
+                <li>
+                    <a href="/" class="mobile-nav-item active">
+                        <i class="bi bi-house-door text-danger"></i>
+                        <span>Home</span>
                     </a>
                 </li>
-
+                <li>
+                    <a href="#categories" class="mobile-nav-item" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-grid text-primary"></i>
+                        <span>All Categories</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#featured-products" class="mobile-nav-item" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-award text-warning"></i>
+                        <span>Prime Selections</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#special-offers" class="mobile-nav-item" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-fire text-danger"></i>
+                        <span class="text-danger fw-bold">Flash Deals & Offers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#popular-products" class="mobile-nav-item" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-trophy text-info"></i>
+                        <span>Best Sellers</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'products:wishlist' %}" class="mobile-nav-item">
+                        <i class="bi bi-heart text-danger"></i>
+                        <span>My Saved Wishlist</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{% url 'cart' %}" class="mobile-nav-item">
+                        <i class="bi bi-bag-check text-danger"></i>
+                        <span>My Cart ({{ cart_count|default:0 }})</span>
+                    </a>
+                </li>
             </ul>
 
+            <h6 class="text-uppercase text-muted fw-bold small mb-2" style="letter-spacing: 1px;">Account & Help</h6>
+            <ul class="list-unstyled mobile-nav-list mb-3">
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="{% url 'accounts:profile' %}" class="mobile-nav-item">
+                            <i class="bi bi-person-gear"></i>
+                            <span>Profile & Saved Address</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'accounts:orders' %}" class="mobile-nav-item">
+                            <i class="bi bi-box-seam"></i>
+                            <span>My Orders</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{% url 'accounts:logout' %}" class="mobile-nav-item text-danger">
+                            <i class="bi bi-box-arrow-right text-danger"></i>
+                            <span>Logout</span>
+                        </a>
+                    </li>
+                {% endif %}
+                <li>
+                    <a href="#why-choose-us" class="mobile-nav-item" data-bs-dismiss="offcanvas">
+                        <i class="bi bi-shield-check"></i>
+                        <span>Cold-Chain Guarantee</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="tel:+919876543210" class="mobile-nav-item">
+                        <i class="bi bi-telephone"></i>
+                        <span>Customer Support: +91 98765 43210</span>
+                    </a>
+                </li>
+            </ul>
         </div>
 
     </div>
-</nav>
+</div>

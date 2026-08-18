@@ -1,267 +1,120 @@
-<section class="py-5">
-
+<section id="special-offers" class="special-offers-section">
     <div class="container">
 
-        <!-- HEADER -->
-
-        <div class="d-flex justify-content-between align-items-center mb-4">
-
+        <!-- Flash Deal Header with Countdown -->
+        <div class="flash-deal-header">
             <div>
-
-                <span class="badge bg-danger px-3 py-2 mb-2">
-                    🔥 Limited Time Deals
+                <span class="section-tag section-tag-deal">
+                    <i class="bi bi-fire"></i>
+                    Limited Time Flash Deals
                 </span>
-
-                <h2 class="fw-bold mb-1">
-                    Special Offers
+                <h2 class="section-title mb-1">
+                    Special Frozen Offers
                 </h2>
-
                 <p class="text-muted mb-0">
-                    Grab your favorite products at special prices.
+                    Grab your premium favorites at unbeatable special prices.
                 </p>
-
             </div>
 
+            <!-- Countdown Timer Pill -->
+            <div class="countdown-timer-box">
+                <i class="bi bi-clock-history text-danger fs-5"></i>
+                <span class="countdown-label">Offers End In:</span>
+                <span id="flashDealTimer" class="countdown-digits">04h : 30m : 00s</span>
+            </div>
         </div>
 
-
-        <!-- PRODUCTS -->
-
-        <div class="row g-4">
-
+        <!-- Deals Grid -->
+        <div class="row g-4 justify-content-center">
             {% for product in special_offers %}
+            <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                <div class="product-card-modern deal-card-wrap">
 
-            <div class="col-xl-3 col-lg-4 col-md-6">
-
-                <div class="card border-0 shadow-sm h-100 position-relative">
-
-
-                    <!-- DISCOUNT BADGE -->
-
-                    {% if product.discount_percentage %}
-
-                    <span
-                        class="position-absolute top-0 start-0 m-3 badge bg-danger px-3 py-2"
-                        style="z-index:5;"
-                    >
-                        {{ product.discount_percentage }}% OFF
-                    </span>
-
-                    {% endif %}
-
-
-                    <!-- WISHLIST -->
-
-                    {% if user.is_authenticated %}
-
-                    <a
-                        href="{% url 'products:toggle_wishlist' product.id %}"
-                        class="btn btn-sm btn-light position-absolute top-0 end-0 m-2 rounded-circle shadow-sm"
-                        style="
-                            z-index:10;
-                            width:36px;
-                            height:36px;
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                        "
-                        title="Add to Wishlist"
-                    >
-
-                        {% if product.id in user_wishlist_ids %}
-                            ❤️
+                    <!-- Image & Badges Container -->
+                    <div class="product-img-box">
+                        {% if product.primary_image %}
+                            <a href="{% url 'products:product_detail' product.slug %}">
+                                <img src="{{ product.primary_image.image.url }}" class="product-card-img" alt="{{ product.name }}">
+                            </a>
                         {% else %}
-                            🤍
+                            <div class="w-100 h-100 d-flex align-items-center justify-content-center bg-light text-muted">
+                                <i class="bi bi-image fs-1"></i>
+                            </div>
                         {% endif %}
 
-                    </a>
+                        <!-- Discount Badge -->
+                        {% if product.discount_percentage %}
+                            <span class="badge-discount-ribbon">
+                                🔥 {{ product.discount_percentage }}% OFF
+                            </span>
+                        {% endif %}
 
-                    {% else %}
-
-                    <a
-                        href="{% url 'accounts:login' %}?next={{ request.path }}"
-                        class="btn btn-sm btn-light position-absolute top-0 end-0 m-2 rounded-circle shadow-sm"
-                        style="
-                            z-index:10;
-                            width:36px;
-                            height:36px;
-                            display:flex;
-                            align-items:center;
-                            justify-content:center;
-                        "
-                    >
-                        🤍
-                    </a>
-
-                    {% endif %}
-
-
-                    <!-- IMAGE -->
-
-                    {% if product.primary_image %}
-
-                    <a
-                        href="{% url 'products:product_detail' product.slug %}"
-                        class="d-block"
-                    >
-
-                        <img
-                            src="{{ product.primary_image.image.url }}"
-                            class="card-img-top"
-                            alt="{{ product.name }}"
-                            style="
-                                height:240px;
-                                object-fit:cover;
-                            "
-                        >
-
-                    </a>
-
-                    {% else %}
-
-                    <div
-                        class="bg-light d-flex align-items-center justify-content-center"
-                        style="height:240px;"
-                    >
-
-                        <i class="bi bi-image fs-1 text-muted"></i>
-
+                        <!-- Wishlist Toggle -->
+                        {% if user.is_authenticated %}
+                            <a href="{% url 'products:toggle_wishlist' product.id %}" class="btn-wishlist-modern {% if product.id in user_wishlist_ids %}active{% endif %}" title="Add to Wishlist">
+                                {% if product.id in user_wishlist_ids %}
+                                    <i class="bi bi-heart-fill text-danger"></i>
+                                {% else %}
+                                    <i class="bi bi-heart"></i>
+                                {% endif %}
+                            </a>
+                        {% else %}
+                            <a href="{% url 'accounts:login' %}?next={{ request.path }}" class="btn-wishlist-modern" title="Login to save item">
+                                <i class="bi bi-heart"></i>
+                            </a>
+                        {% endif %}
                     </div>
 
-                    {% endif %}
-
-
-                    <!-- DETAILS -->
-
-                    <div class="card-body d-flex flex-column">
-
-
+                    <!-- Card Body -->
+                    <div class="product-card-body">
                         {% if product.brand %}
-
-                        <small class="text-muted">
-                            {{ product.brand }}
-                        </small>
-
+                            <div class="product-brand-tag">{{ product.brand }}</div>
+                        {% else %}
+                            <div class="product-brand-tag">Deal of the Day</div>
                         {% endif %}
 
-
-                        <h5 class="fw-bold mt-2">
-
-                            <a
-                                href="{% url 'products:product_detail' product.slug %}"
-                                class="text-decoration-none text-dark"
-                            >
-
+                        <h5 class="mb-0">
+                            <a href="{% url 'products:product_detail' product.slug %}" class="product-title-link">
                                 {{ product.name }}
-
                             </a>
-
                         </h5>
 
-
-                        <!-- PRICE -->
-
-                        <div class="mt-2">
-
-                            <span class="fs-5 fw-bold text-success">
-
-                                ₹{{ product.starting_price }}
-
-                            </span>
-
-
+                        <!-- Price Section -->
+                        <div class="product-price-row">
+                            <span class="price-current text-danger">₹{{ product.starting_price }}</span>
                             {% if product.mrp_price %}
-
-                            <span
-                                class="text-muted text-decoration-line-through ms-2"
-                            >
-
-                                ₹{{ product.mrp_price }}
-
-                            </span>
-
+                                <span class="price-mrp">₹{{ product.mrp_price }}</span>
                             {% endif %}
-
                         </div>
 
-
-                        <!-- SAVING -->
-
-                        {% if product.discount_percentage %}
-
-                        <small class="text-success mt-2">
-
-                            You save
-
-                            ₹{{ product.mrp_price|add:"-"|add:product.starting_price }}
-
-                        </small>
-
-                        {% endif %}
-
-
-                        <!-- BUTTON -->
-
-                        <div class="mt-auto pt-3">
-
+                        <!-- CTA Button -->
+                        <div class="product-action-box">
                             {% if product.is_in_stock %}
-
-                            <a
-                                href="{% url 'products:product_detail' product.slug %}"
-                                class="btn btn-danger w-100"
-                            >
-
-                                View Deal
-
-                            </a>
-
+                                <a href="{% url 'products:product_detail' product.slug %}" class="btn btn-deal btn-card-action">
+                                    <span>Claim Deal</span>
+                                    <i class="bi bi-lightning-fill"></i>
+                                </a>
                             {% else %}
-
-                            <button
-                                class="btn btn-secondary w-100"
-                                disabled
-                            >
-
-                                Out of Stock
-
-                            </button>
-
+                                <button class="btn btn-secondary btn-card-action" disabled>
+                                    <span>Sold Out</span>
+                                </button>
                             {% endif %}
-
                         </div>
-
 
                     </div>
 
                 </div>
-
             </div>
-
-
             {% empty %}
-
-            <div class="col-12">
-
-                <div class="text-center py-5">
-
-                    <i class="bi bi-tag fs-1 text-muted"></i>
-
-                    <h5 class="fw-bold mt-3">
-                        No Special Offers Right Now
-                    </h5>
-
-                    <p class="text-muted">
-                        Check back soon for exciting deals.
-                    </p>
-
+            <div class="col-12 text-center py-5">
+                <div class="p-4 bg-white rounded-4 shadow-sm d-inline-block">
+                    <i class="bi bi-tag text-muted fs-1 mb-2 d-block"></i>
+                    <h5 class="fw-bold">No Active Flash Deals</h5>
+                    <p class="text-muted mb-0">Check back soon for fresh promotions and discounts!</p>
                 </div>
-
             </div>
-
             {% endfor %}
-
         </div>
 
     </div>
-
 </section>

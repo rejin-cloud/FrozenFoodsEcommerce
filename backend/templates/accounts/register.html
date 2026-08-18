@@ -1,29 +1,183 @@
-{% extends "base.html" %}
+{% extends "accounts/auth_base.html" %}
 
-{% block content %}
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6 col-lg-5">
-            <div class="card p-4 shadow-sm border-0">
-                <h3 class="fw-bold mb-4 text-center">Create Account</h3>
-                <form method="POST">
-                    {% csrf_token %}
-                    {% for field in form %}
-                    <div class="mb-3">
-                        <label class="form-label fw-bold">{{ field.label }}</label>
-                        {{ field }}
-                        {% if field.errors %}
-                        <div class="text-danger small">{{ field.errors }}</div>
-                        {% endif %}
-                    </div>
-                    {% endfor %}
-                    <button type="submit" class="btn btn-success w-100 py-2 fw-bold">Register</button>
-                </form>
-                <p class="text-center mt-3 mb-0">
-                    Already have an account? <a href="{% url 'accounts:login' %}" class="text-success fw-bold">Login</a>
-                </p>
-            </div>
+{% block title %}Create Account | Meame.in{% endblock %}
+
+{% block card_container_class %}auth-card-wide{% endblock %}
+
+{% block auth_switch_nav %}
+<span class="auth-switch-text">
+    Already have an account? <a href="{% url 'accounts:login' %}" class="auth-switch-link">Sign In</a>
+</span>
+{% endblock %}
+
+{% block auth_content %}
+<div class="auth-card">
+
+    <!-- Card Header -->
+    <div class="auth-header">
+        <div class="auth-header-icon">
+            <i class="bi bi-person-plus"></i>
+        </div>
+        <h1 class="auth-title">Create Account</h1>
+        <p class="auth-subtitle">
+            Join Meame for sub-zero fresh meat delivery, exclusive member discounts, and effortless ordering.
+        </p>
+    </div>
+
+    <!-- Non-Field Validation Errors -->
+    {% if form.non_field_errors %}
+    <div class="alert alert-danger d-flex align-items-center gap-2 py-2 px-3 mb-4 rounded-3 small">
+        <i class="bi bi-exclamation-octagon-fill text-danger fs-5"></i>
+        <div>
+            {% for error in form.non_field_errors %}
+                <div>{{ error }}</div>
+            {% endfor %}
         </div>
     </div>
+    {% endif %}
+
+    <!-- Registration Form -->
+    <form method="POST" novalidate>
+        {% csrf_token %}
+
+        <!-- 2-Column: First Name & Last Name -->
+        <div class="row g-3 mb-3">
+            <div class="col-sm-6">
+                <label class="auth-label" for="id_first_name">First Name</label>
+                <div class="auth-input-wrapper">
+                    {{ form.first_name }}
+                    <i class="bi bi-person auth-input-icon"></i>
+                </div>
+                {% if form.first_name.errors %}
+                <div class="auth-input-error">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <span>{{ form.first_name.errors.0 }}</span>
+                </div>
+                {% endif %}
+            </div>
+            <div class="col-sm-6">
+                <label class="auth-label" for="id_last_name">Last Name</label>
+                <div class="auth-input-wrapper">
+                    {{ form.last_name }}
+                    <i class="bi bi-person auth-input-icon"></i>
+                </div>
+                {% if form.last_name.errors %}
+                <div class="auth-input-error">
+                    <i class="bi bi-exclamation-circle-fill"></i>
+                    <span>{{ form.last_name.errors.0 }}</span>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        <!-- Username -->
+        <div class="auth-form-group">
+            <label class="auth-label" for="id_username">Username</label>
+            <div class="auth-input-wrapper">
+                {{ form.username }}
+                <i class="bi bi-at auth-input-icon"></i>
+            </div>
+            {% if form.username.errors %}
+            <div class="auth-input-error">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span>{{ form.username.errors.0 }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Email -->
+        <div class="auth-form-group">
+            <label class="auth-label" for="id_email">Email Address</label>
+            <div class="auth-input-wrapper">
+                {{ form.email }}
+                <i class="bi bi-envelope auth-input-icon"></i>
+            </div>
+            {% if form.email.errors %}
+            <div class="auth-input-error">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span>{{ form.email.errors.0 }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Password -->
+        <div class="auth-form-group">
+            <label class="auth-label" for="id_password1">Password</label>
+            <div class="auth-input-wrapper">
+                {{ form.password1 }}
+                <i class="bi bi-lock auth-input-icon"></i>
+                <button
+                    type="button"
+                    class="auth-password-toggle"
+                    data-target="id_password1"
+                    aria-label="Toggle password visibility"
+                >
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+            {% if form.password1.errors %}
+            <div class="auth-input-error">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span>{{ form.password1.errors.0 }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Confirm Password -->
+        <div class="auth-form-group">
+            <label class="auth-label" for="id_password2">Confirm Password</label>
+            <div class="auth-input-wrapper">
+                {{ form.password2 }}
+                <i class="bi bi-shield-lock auth-input-icon"></i>
+                <button
+                    type="button"
+                    class="auth-password-toggle"
+                    data-target="id_password2"
+                    aria-label="Toggle password confirmation visibility"
+                >
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+            {% if form.password2.errors %}
+            <div class="auth-input-error">
+                <i class="bi bi-exclamation-circle-fill"></i>
+                <span>{{ form.password2.errors.0 }}</span>
+            </div>
+            {% endif %}
+        </div>
+
+        <!-- Terms Agreement -->
+        <div class="mb-4">
+            <label class="auth-remember-check" style="font-size: 0.84rem; align-items: flex-start;">
+                <input type="checkbox" name="agree_terms" required checked style="margin-top: 2px;">
+                <span>
+                    I agree to the <a href="#" class="auth-switch-link">Terms & Conditions</a> and <a href="#" class="auth-switch-link">Privacy Policy</a> of Meame.in.
+                </span>
+            </label>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="btn-auth-submit">
+            <i class="bi bi-check2-circle"></i>
+            <span>Create My Account</span>
+        </button>
+
+    </form>
+
+    <!-- Mobile Switch Link -->
+    <div class="text-center mt-4 d-sm-none">
+        <span class="auth-switch-text">
+            Already have an account? <a href="{% url 'accounts:login' %}" class="auth-switch-link">Sign In</a>
+        </span>
+    </div>
+
+    <!-- Security Trust Pill -->
+    <div class="text-center">
+        <div class="auth-trust-pill">
+            <i class="bi bi-shield-check"></i>
+            <span>100% Data Privacy & Encrypted Protection</span>
+        </div>
+    </div>
+
 </div>
 {% endblock %}

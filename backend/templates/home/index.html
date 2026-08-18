@@ -1,24 +1,35 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
-{% include 'home/hero.html' %}
+    <!-- 1. Hero Section -->
+    {% include 'home/hero.html' %}
 
-{% include 'home/categories.html' %}
+    <!-- 2. Trust Features Bar -->
+    {% include 'home/trust_features.html' %}
 
-{% include 'home/featured_products.html' %}
+    <!-- 3. Categories Grid -->
+    {% include 'home/categories.html' %}
 
-{% include 'home/why_choose_us.html' %}
+    <!-- 4. Featured Products -->
+    {% include 'home/featured_products.html' %}
 
-{% include 'home/popular_products.html' %}
+    <!-- 5. Special Offers / Flash Deals -->
+    {% include 'home/special_offers.html' %}
 
-{% include 'home/special_offers.html' %}
+    <!-- 6. Why Choose Us (Bento Grid) -->
+    {% include 'home/why_choose_us.html' %}
 
-{% include 'home/how_it_works.html' %}
+    <!-- 7. Popular / Best Selling Products -->
+    {% include 'home/popular_products.html' %}
 
-{% include 'home/testimonials.html' %}
+    <!-- 8. How It Works (Timeline) -->
+    {% include 'home/how_it_works.html' %}
 
-{% include 'home/cta.html' %}
+    <!-- 9. Customer Testimonials -->
+    {% include 'home/testimonials.html' %}
+
+    <!-- 10. Freezer Club CTA & Newsletter -->
+    {% include 'home/cta.html' %}
 
 {% endblock %}

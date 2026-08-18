@@ -14,5 +14,8 @@ backend/db.sqlite3
 # Uploaded files
 backend/media/
 
+# Nested clones
+FrozenFoodsEcommerce/
+
 # VS Code
 .vscode/
