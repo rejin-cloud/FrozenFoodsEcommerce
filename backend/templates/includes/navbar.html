@@ -35,7 +35,7 @@
 
                 <!-- 1. Left: Brand Logo -->
                 <a class="navbar-brand navbar-brand-logo me-0 d-flex align-items-center" href="/" aria-label="Home Dashboard">
-                    <img src="{% static 'images/logo.png' %}" alt="Meame.in" class="navbar-brand-img">
+                    <img src="{% static 'images/logo.png' %}" alt="Oyster Reef" class="navbar-brand-img">
                 </a>
 
                 <!-- 2. Center: Prominent Search Bar (Desktop & Tablet) -->
@@ -60,6 +60,12 @@
                 <!-- 3. Right: Action Buttons Hub -->
                 <div class="d-flex align-items-center gap-2">
 
+                    <!-- Theme Toggle Switch Button -->
+                    <button class="theme-toggle-btn" type="button" onclick="toggleTheme()" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+                        <i class="bi bi-sun-fill theme-icon-light"></i>
+                        <i class="bi bi-moon-stars-fill theme-icon-dark"></i>
+                    </button>
+
                     <!-- Wishlist Button -->
                     <a href="{% url 'products:wishlist' %}" class="btn-header-action d-none d-sm-inline-flex" title="Saved Wishlist">
                         <i class="bi bi-heart fs-5"></i>
@@ -77,7 +83,7 @@
                                 <li>
                                     <div class="px-3 py-2 border-bottom">
                                         <small class="text-muted d-block">Signed in as</small>
-                                        <strong class="text-dark">{{ user.username }}</strong>
+                                        <strong class="text-main">{{ user.username }}</strong>
                                     </div>
                                 </li>
                                 <li><a class="dropdown-item mt-1" href="{% url 'accounts:profile' %}"><i class="bi bi-person me-2 text-muted"></i> Profile & Address</a></li>
@@ -199,31 +205,46 @@
 <div class="offcanvas offcanvas-start mobile-nav-drawer" tabindex="-1" id="mobileNavDrawer" aria-labelledby="mobileNavDrawerLabel">
     <div class="offcanvas-header border-bottom">
         <a class="navbar-brand navbar-brand-logo d-flex align-items-center" href="/" id="mobileNavDrawerLabel" aria-label="Home Dashboard">
-            <img src="{% static 'images/logo.png' %}" alt="Meame.in" class="navbar-brand-img mobile-brand-img">
+            <img src="{% static 'images/logo.png' %}" alt="Oyster Reef" class="navbar-brand-img mobile-brand-img">
         </a>
         <button type="button" class="btn-close text-reset shadow-none" data-bs-dismiss="offcanvas" aria-label="Close"></button>
     </div>
     <div class="offcanvas-body p-0">
 
-        <!-- User Quick Status / Action -->
-        <div class="p-3 bg-light border-bottom">
+        <!-- User Quick Status / Action & Theme Switcher -->
+        <div class="p-3 border-bottom" style="background: var(--bg-surface-elevated);">
             {% if user.is_authenticated %}
-                <div class="d-flex align-items-center gap-3">
+                <div class="d-flex align-items-center gap-3 mb-3">
                     <div class="avatar-initial-circle avatar-grad-1" style="width:42px; height:42px; font-size:1rem;">
                         {{ user.username|slice:":1"|upper }}
                     </div>
                     <div>
-                        <div class="fw-bold text-dark">{{ user.username }}</div>
+                        <div class="fw-bold text-main">{{ user.username }}</div>
                         <small class="text-muted">{{ user.email|default:"Customer Account" }}</small>
                     </div>
                 </div>
             {% else %}
-                <div class="d-flex gap-2">
+                <div class="d-flex gap-2 mb-3">
                     <a href="{% url 'accounts:login' %}" class="btn btn-primary-fresh btn-sm w-100">
                         <i class="bi bi-person me-1"></i> Sign In / Register
                     </a>
                 </div>
             {% endif %}
+
+            <!-- Mobile Theme Switcher Pill -->
+            <div class="mobile-theme-toggle-pill" onclick="toggleTheme()" role="button" aria-label="Toggle Light and Dark theme">
+                <div class="d-flex align-items-center gap-2">
+                    <i class="bi bi-circle-half text-warning"></i>
+                    <span>Appearance Theme</span>
+                </div>
+                <div class="d-flex align-items-center gap-2">
+                    <span id="mobileThemeLabelText" class="badge bg-secondary bg-opacity-25 text-light px-2 py-1 small">Dark Mode</span>
+                    <button class="theme-toggle-btn" style="width: 30px; height: 30px;" type="button" aria-label="Toggle Theme">
+                        <i class="bi bi-sun-fill theme-icon-light" style="font-size: 0.9rem;"></i>
+                        <i class="bi bi-moon-stars-fill theme-icon-dark" style="font-size: 0.9rem;"></i>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- Navigation Links List -->

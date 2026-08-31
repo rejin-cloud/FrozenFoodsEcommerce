@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -11,6 +11,14 @@
     <link rel="icon" type="image/png" sizes="32x32" href="{% static 'images/favicon.png' %}">
     <link rel="icon" type="image/x-icon" href="{% static 'images/favicon.ico' %}">
     <link rel="apple-touch-icon" sizes="180x180" href="{% static 'images/apple-touch-icon.png' %}">
+
+    <!-- Theme Instant Initialization (Zero-FOUC) -->
+    <script>
+        (function() {
+            const savedTheme = localStorage.getItem('meame_theme') || 'dark';
+            document.documentElement.setAttribute('data-bs-theme', savedTheme);
+        })();
+    </script>
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,8 +31,9 @@
     <!-- Bootstrap Icons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
-    <!-- Custom Auth Stylesheet -->
-    <link rel="stylesheet" href="{% static 'css/auth.css' %}">
+    <!-- Global & Auth Stylesheets -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=2.3">
+    <link rel="stylesheet" href="{% static 'css/auth.css' %}?v=2.3">
 </head>
 
 <body class="auth-body">
@@ -45,12 +54,16 @@
                 <!-- Center: Brand Logo (Perfect dead center) -->
                 <div class="auth-header-center">
                     <a href="/" class="auth-brand-logo" aria-label="Home Dashboard">
-                        <img src="{% static 'images/logo.png' %}" alt="Meame.in" class="auth-logo-img">
+                        <img src="{% static 'images/logo.png' %}" alt="Oyster Reef" class="auth-logo-img">
                     </a>
                 </div>
 
-                <!-- Right: Switch action -->
-                <div class="auth-header-right">
+                <!-- Right: Switch action & Theme Switcher -->
+                <div class="auth-header-right d-flex align-items-center justify-content-end gap-2">
+                    <button class="theme-toggle-btn" type="button" onclick="toggleTheme()" aria-label="Toggle Theme" title="Toggle Light/Dark Theme">
+                        <i class="bi bi-sun-fill theme-icon-light"></i>
+                        <i class="bi bi-moon-stars-fill theme-icon-dark"></i>
+                    </button>
                     <div class="d-none d-sm-block">
                         {% block auth_switch_nav %}
                         {% endblock %}
@@ -102,12 +115,111 @@
         </div>
     </footer>
 
+    <!-- Global On-Screen Toast Container -->
+    <div id="globalToastContainer" class="toast-container-global" aria-live="polite" aria-atomic="true"></div>
+
     <!-- Bootstrap 5.3.3 Bundle JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Password visibility toggle script -->
+    <!-- Global Toast Notification Engine -->
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
+        function showToast(message, type = 'success', duration = 3800) {
+            let container = document.getElementById('globalToastContainer');
+            if (!container) {
+                container = document.createElement('div');
+                container.id = 'globalToastContainer';
+                container.className = 'toast-container-global';
+                document.body.appendChild(container);
+            }
+
+            const toast = document.createElement('div');
+            const toastType = (type === 'danger' || type === 'error') ? 'error' : (type === 'warning' ? 'warning' : (type === 'info' ? 'info' : 'success'));
+            toast.className = `custom-toast-pill toast-${toastType}`;
+
+            let icon = 'bi-check2-circle';
+            let title = 'Success';
+            if (toastType === 'warning') {
+                icon = 'bi-exclamation-triangle-fill';
+                title = 'Notice';
+            } else if (toastType === 'error') {
+                icon = 'bi-x-circle-fill';
+                title = 'Error';
+            } else if (toastType === 'info') {
+                icon = 'bi-info-circle-fill';
+                title = 'Info';
+            }
+
+            toast.innerHTML = `
+                <div class="toast-icon-wrap">
+                    <i class="bi ${icon}"></i>
+                </div>
+                <div class="toast-content-wrap">
+                    <div class="toast-title-text">${title}</div>
+                    <div class="toast-msg-text">${message}</div>
+                </div>
+                <button class="toast-btn-close" type="button" aria-label="Close">&times;</button>
+                <div class="toast-progress-bar" style="animation-duration: ${duration}ms;"></div>
+            `;
+
+            container.appendChild(toast);
+
+            let isRemoved = false;
+            function removeToast() {
+                if (isRemoved) return;
+                isRemoved = true;
+                toast.classList.add('toast-hiding');
+                setTimeout(() => {
+                    if (toast.parentNode) {
+                        toast.parentNode.removeChild(toast);
+                    }
+                }, 300);
+            }
+
+            toast.querySelector('.toast-btn-close').addEventListener('click', removeToast);
+            setTimeout(removeToast, duration);
+        }
+
+        // Safe global override to intercept any browser alert() popup into a beautiful on-screen toast
+        window.alert = function(msg) {
+            showToast(msg, 'info', 4000);
+        };
+
+        // Global Theme Switcher Engine
+        function applyTheme(theme, save = true) {
+            document.documentElement.setAttribute('data-bs-theme', theme);
+            if (document.body) {
+                document.body.setAttribute('data-bs-theme', theme);
+            }
+            if (save) {
+                localStorage.setItem('meame_theme', theme);
+            }
+            const toggleButtons = document.querySelectorAll('.theme-toggle-btn');
+            toggleButtons.forEach(btn => {
+                const label = theme === 'dark' ? 'Switch to Light Theme' : 'Switch to Dark Theme';
+                btn.setAttribute('aria-label', label);
+                btn.setAttribute('title', label);
+            });
+            window.dispatchEvent(new CustomEvent('themeChanged', { detail: { theme } }));
+        }
+
+        function toggleTheme() {
+            const currentTheme = document.documentElement.getAttribute('data-bs-theme') || 'dark';
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            applyTheme(newTheme, true);
+            showToast(newTheme === 'dark' ? 'Switched to Dark Theme' : 'Switched to Light Theme', 'info', 2200);
+        }
+
+        // Flash Messages & Password Toggle on Page Load
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentTheme = localStorage.getItem('meame_theme') || 'dark';
+            applyTheme(currentTheme, false);
+
+            {% if messages %}
+                {% for message in messages %}
+                    showToast("{{ message|escapejs }}", "{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %}");
+                {% endfor %}
+            {% endif %}
+
             const toggleButtons = document.querySelectorAll('.auth-password-toggle');
             toggleButtons.forEach(button => {
                 button.addEventListener('click', function () {
